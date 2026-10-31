@@ -10,26 +10,19 @@
 // ici en degrés. Le nom, facultatif, est le seul argument positionnel après
 // l'angle (ou les deux angles) : tc-point(80deg, $A$).
 
-#import "outils.typ": _deg, _reel, _nom, _marques, _est-nombre
+#import "outils.typ": _deg, _reel, _nom, _taille-marque, _est-nombre
 
 // Point du cercle, marqué et nommé à l'extérieur du cercle ; mark : forme
 // de la marque (voir _marques) ou none, mark-size : sa largeur en cm (pour
-// un rayon jusqu'à 1, elle grandit ensuite avec le cercle) ; auto : 0,1 pour
-// le disque plein, 0,15 pour les autres formes, moins lisibles en petit.
+// un rayon jusqu'à 1, elle grandit ensuite avec le cercle ; voir
+// _taille-marque).
 #let tc-point(a, ..nom, color: black, anchor: auto, mark: "*", mark-size: auto) = {
   if anchor != auto and type(anchor) != str {
     panic("tc-point: anchor must be auto or a CeTZ anchor such as \"south-west\", not " + repr(anchor))
   }
-  if mark != none and mark not in _marques {
-    panic("tc-point: mark must be none or one of " + _marques.map(repr).join(", ") + ", not " + repr(mark))
-  }
-  if mark-size == auto { mark-size = if mark == "*" { 0.1 } else { 0.15 } }
-  if not _est-nombre(mark-size) or mark-size <= 0 {
-    panic("tc-point: mark-size must be auto or a positive number (in cm), not " + repr(mark-size))
-  }
   (
     _ctz-trigo: "point", angle: _deg(a, "tc-point"), name: _nom(nom, "tc-point"),
-    color: color, anchor: anchor, mark: mark, mark-size: mark-size,
+    color: color, anchor: anchor, mark: mark, mark-size: _taille-marque(mark, mark-size, "tc-point"),
   )
 }
 
@@ -83,10 +76,13 @@
 
 // Réel x enroulé sur le cercle : segment de I(1 ; 0) à M(1 ; x) sur la
 // droite réelle, arc de I au point image (sur un tour), spirale de M vers
-// ce point. x est un réel (une longueur), pas un angle.
-#let tc-wind(x, ..nom, color: rgb("#228B22"), segment: true, arc: true) = (
+// ce point. x est un réel (une longueur), pas un angle. mark et mark-size
+// (comme tc-point) marquent les deux points : M sur la droite réelle, son
+// image sur le cercle.
+#let tc-wind(x, ..nom, color: rgb("#228B22"), segment: true, arc: true, mark: "*", mark-size: auto) = (
   _ctz-trigo: "wind", x: _reel(x, "tc-wind"), name: _nom(nom, "tc-wind"),
   color: color, segment: segment, arc: arc,
+  mark: mark, mark-size: _taille-marque(mark, mark-size, "tc-wind"),
 )
 
 // Segment [de ; a] de la droite réelle (de et a réels).

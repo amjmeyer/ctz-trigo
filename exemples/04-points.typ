@@ -37,15 +37,27 @@ Angles are numbers of degrees (`80`) or Typst angles (`180deg`, `calc.pi / 4 * 1
   tc-arc(0, 1rad, thickness: 1pt, arrow: true),
 )
 
+#let angU = 20
+#let angV = 140
 #trig-circle(
   radius: 2,
   remarkable: false,
   show-origin: true,
   show-direction: true,
-  tc-arc(20, 110),
-  tc-vector(20, $arrow(u)$, from: (0.15, -0.85), color: green),
-  tc-vector(110, $arrow(v)$, from: (-0.35, -0.9), color: orange),
-  tc-ray(20, $U$, color: green),
-  tc-ray(110, $V$, color: orange),
-  tc-angle(20, 110, $(arrow(u), arrow(v))$),
+  tc-arc(angU, angV),
+  tc-vector(
+    angU,
+    $arrow(u)$,
+    from: (0.15, -0.85),
+    color: green,
+  ),
+  tc-vector(
+    angV,
+    $arrow(v)$,
+    from: (-0.7, -0.3),
+    color: orange,
+  ),
+  tc-ray(angU, $U$, color: green),
+  tc-ray(angV, $V$, color: orange),
+  tc-angle(angU, angV, $(arrow(u), arrow(v))$),
 )

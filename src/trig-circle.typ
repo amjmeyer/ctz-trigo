@@ -423,10 +423,11 @@
       }),
       stroke: (paint: coul, dash: "densely-dashed", thickness: 0.6pt),
     )
-    marque((R, x * R), couleur: coul)
+    // sur la droite réelle (verticale), la normale est horizontale : angle 0
+    if e.mark != none { _marque((R, x * R), e.mark, e.mark-size * k, coul, 0, background) }
     // nom à droite de la droite réelle, sans la chevaucher
     if e.name != none { content((R, x * R), nom(e.name, coul), anchor: "west", padding: 0.08 * k) }
-    marque(pt(deg))
+    if e.mark != none { _marque(pt(deg), e.mark, e.mark-size * k, black, deg, background) }
   }
   for e in sorte("interval") {
     line((R, e.from * R), (R, e.to * R), stroke: e.color + e.thickness)

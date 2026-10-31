@@ -178,17 +178,29 @@ Click a drawing to see its code.
 <summary><img src="images/04-04.svg" alt="exemple 4.4"></summary>
 
 ```typ
+#let angU = 20
+#let angV = 140
 #trig-circle(
   radius: 2,
   remarkable: false,
   show-origin: true,
   show-direction: true,
-  tc-arc(20, 110),
-  tc-point(20, $U$, color: green),
-  tc-point(110, $V$, color: orange),
-  tc-vector(20, $arrow(u)$, from: (0.15, -0.85), color: green),
-  tc-vector(110, $arrow(v)$, from: (-0.35, -0.9), color: orange),
-  tc-angle(20, 110, $(arrow(u), arrow(v))$),
+  tc-arc(angU, angV),
+  tc-vector(
+    angU,
+    $arrow(u)$,
+    from: (0.15, -0.85),
+    color: green,
+  ),
+  tc-vector(
+    angV,
+    $arrow(v)$,
+    from: (-0.7, -0.3),
+    color: orange,
+  ),
+  tc-ray(angU, $U$, color: green),
+  tc-ray(angV, $V$, color: orange),
+  tc-angle(angU, angV, $(arrow(u), arrow(v))$),
 )
 ```
 
@@ -216,12 +228,16 @@ Click a drawing to see its code.
 
 ```typ
 #trig-circle(
-  radius: 3,
+  radius: 2,
   remarkable: false,
   show-direction: true,
   real-line-label: [axe réel],
-  tc-wind(9 * calc.pi / 8, $M((9pi)/8)$),
-  tc-wind(-7 * calc.pi / 8, $P(-(7pi)/8)$, color: blue),
+  tc-wind(
+    9 * calc.pi / 8,
+    $M((9pi)/8)$,
+    mark: "x",
+  ),
+  tc-wind(-7 * calc.pi / 8, $P(-(7pi)/8)$, color: blue, mark: "square"),
 )
 ```
 
@@ -348,7 +364,7 @@ placed outside the circle, never across an axis.
 | `tc-vector(angle, name)` | `from` (`(0, 0)`), `length` (`1`), `color` (`black`), `thickness` (`auto`) | a vector of direction `angle`, anywhere: `from` is its origin, a point `(x, y)` in radii or an angle (that point of the circle); `length` in radii; the name goes in the middle, on its left |
 | `tc-arc(from, to, name)` | `color` (`red`), `thickness` (`2pt`), `arrow` (`false`) | an arc of the circle |
 | `tc-angle(from, to, name)` | `color` (`purple`), `radius` (`0.4`, in radii), `fill` (`none`) | an angle at the centre |
-| `tc-wind(x, name)` | `color` (green), `segment` (`true`), `arc` (`true`) | the real `x` wound on the circle: segment from I to M(1 ; x), arc from I, spiral |
+| `tc-wind(x, name)` | `color` (green), `segment` (`true`), `arc` (`true`), `mark` (`"*"`), `mark-size` (`auto`) | the real `x` wound on the circle: segment from I to M(1 ; x), arc from I, spiral; `mark` and `mark-size` as for `tc-point`, for both points (on the real line and on the circle) |
 | `tc-interval(from, to)` | `color` (`red`), `thickness` (`2pt`) | a segment of the real line |
 | `tc-cos-eq(angle)` | `color` (`blue`), `lines` (`true`) | the two solutions of cos x = cos α |
 | `tc-sin-eq(angle)` | `color` (`blue`), `lines` (`true`) | the two solutions of sin x = sin α |

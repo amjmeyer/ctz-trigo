@@ -15,3 +15,4 @@
 - `tc-point`: keys `mark` (the marks of pgfplots, as in simple-plot) and
   `mark-size`.
 - `tc-vector`: a vector of given direction drawn anywhere, not only from O.
+- `tc-wind`: keys `mark` and `mark-size`, for its two points.

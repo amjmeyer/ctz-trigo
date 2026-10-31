@@ -14,6 +14,20 @@
 // Vrai pour un nombre (entier, flottant ou décimal).
 #let _est-nombre(x) = type(x) in (int, float, decimal)
 
+// Vérifie mark et mark-size d'un élément (`quoi`) et renvoie la taille ;
+// auto : 0,1 pour le disque plein, 0,15 pour les autres formes, moins
+// lisibles en petit.
+#let _taille-marque(mark, mark-size, quoi) = {
+  if mark != none and mark not in _marques {
+    panic(quoi + ": mark must be none or one of " + _marques.map(repr).join(", ") + ", not " + repr(mark))
+  }
+  if mark-size == auto { return if mark == "*" { 0.1 } else { 0.15 } }
+  if not _est-nombre(mark-size) or mark-size <= 0 {
+    panic(quoi + ": mark-size must be auto or a positive number (in cm), not " + repr(mark-size))
+  }
+  mark-size
+}
+
 // Angle en degrés (nombre), qu'on le donne en degrés (45) ou en angle Typst
 // (45deg, calc.pi / 4 * 1rad) ; `quoi` nomme la fonction dans l'erreur.
 #let _deg(a, quoi) = {

@@ -33,3 +33,6 @@
 // nom d'un vecteur
 #releve-textes("v", trig-circle(remarkable: false, tc-vector(30, [u], from: (0.5, -0.5))))
 #context egal(textes("v"), "u", quoi: "nom du vecteur")
+
+// toutes les marques d'enroulement se dessinent
+#trig-circle(radius: 1, remarkable: false, .._marques.map(m => tc-wind(1, mark: m)), tc-wind(-1, mark: none))

@@ -9,6 +9,8 @@
 # Un dessin = un appel sur plusieurs lignes, en début de ligne, dont la
 # première ligne finit par « ( », « [ » ou « { », fermé par « ) », « ] » ou
 # « }) » seul sur sa ligne. `cetz` est importé pour les dessins dans un canvas.
+# Les « #let … » d'une ligne écrits entre deux dessins s'affichent avec le
+# dessin qui les suit ; ceux d'avant restent connus des dessins suivants.
 
 cd "$(dirname "$0")/.."
 
@@ -31,17 +33,22 @@ entete = '''#import "/src/lib.typ": *
 #set page(width: auto, height: auto, margin: 6pt, fill: white)
 '''
 
+# (définitions d'avant, code affiché) pour chaque dessin du fichier
 def dessins(texte):
-    blocs, courant = [], None
+    blocs, courant, lets, avant = [], None, [], []
     for ligne in texte.splitlines():
         if courant is None:
-            if re.match(r"#[a-z]", ligne) and ligne.rstrip()[-1:] in "([{":
-                courant = [ligne]
+            if ligne.startswith("#let "):
+                lets.append(ligne)
+            elif (re.match(r"#[a-z]", ligne) and not re.match(r"#(import|set|show) ", ligne)
+                  and ligne.rstrip()[-1:] in "([{"):
+                courant = lets + [ligne]
         else:
             courant.append(ligne)
             if ligne in (")", "]", "})"):
-                blocs.append("\n".join(courant))
-                courant = None
+                blocs.append(("\n".join(avant), "\n".join(courant)))
+                avant, courant = avant + lets, None
+                lets = []
     return blocs
 
 lignes = []
@@ -50,10 +57,10 @@ for numero, fichier in enumerate(fichiers, 1):
     texte = open(fichier).read()
     titre = re.search(r"^= (.*)$", texte, re.M)
     lignes += ["", "### %d. %s" % (numero, titre.group(1) if titre else fichier)]
-    for k, code in enumerate(dessins(texte), 1):
+    for k, (avant, code) in enumerate(dessins(texte), 1):
         image = "images/%02d-%02d.svg" % (numero, k)
         subprocess.run([os.environ["TYPST"], "compile", "--root", ".", "--format", "svg", "-", image],
-                       input=entete + code, text=True, check=True)
+                       input=entete + avant + "\n" + code, text=True, check=True)
         lignes += ["", "<details>",
                    '<summary><img src="%s" alt="exemple %d.%d"></summary>' % (image, numero, k),
                    "", "```typ", code, "```", "", "</details>"]

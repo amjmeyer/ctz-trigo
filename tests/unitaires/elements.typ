@@ -48,3 +48,9 @@
   proche(x, 0, quoi: "origine sur le cercle (x)")
   proche(y, 1, quoi: "origine sur le cercle (y)")
 }
+
+// marques des enroulements
+#egal(tc-wind(2).mark, "*", quoi: "marque d'enroulement par défaut")
+#egal(tc-wind(2).mark-size, 0.1, quoi: "taille du disque plein (enroulement)")
+#egal(tc-wind(2, mark: "o").mark-size, 0.15, quoi: "taille des autres formes (enroulement)")
+#egal(tc-wind(2, mark: none).mark, none, quoi: "enroulement sans marque")
