@@ -14,8 +14,8 @@ src/
                    and the tc-* elements
   deps.typ         the only external import (@preview/cetz:0.5.2)
   outils.typ       _deg, _reel, _nom, _ancre-ext, _arc (not exported)
-  elements.typ     tc-point, tc-ray, tc-arc, tc-angle, tc-wind, tc-interval,
-                   tc-cos-eq, tc-sin-eq, tc-cos-sin
+  elements.typ     tc-point, tc-ray, tc-vector, tc-arc, tc-angle, tc-wind,
+                   tc-interval, tc-cos-eq, tc-sin-eq, tc-cos-sin
   trig-circle.typ  the drawing
 exemples/          01-… to 07-…: one file per use case
   readme.sh        rebuilds the "Examples" part of the README (images/)
@@ -36,6 +36,11 @@ Two steps, as in ctz-interval.
    last, on top). Its `..elements` sink also receives unknown named keys:
    they are rejected first. `trig-circle` wraps it in
    `cetz.canvas(length: 1cm, …)`.
+
+Size of what is added: `k = max(1, (1 + radius) / 2)` multiplies the names, points
+(`marque`), arrow heads (`pointe`) and paddings of the elements and of the
+frame (`rep`), never the thicknesses nor ProfLycee's remarkable values and
+angles (`val`, `ang`). Use these helpers for any new element.
 
 ## Conventions
 

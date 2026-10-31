@@ -4,6 +4,13 @@
 
 // Outils communs (non exportés).
 
+// Marques des points, avec les noms de pgfplots (comme simple-plot) ; « * »
+// final = pleine. Sur le cercle, « | » est radial et « - » tangent.
+#let _marques = (
+  "*", "o", "square", "square*", "triangle", "triangle*", "diamond", "diamond*",
+  "star", "star*", "+", "x", "|", "-",
+)
+
 // Vrai pour un nombre (entier, flottant ou décimal).
 #let _est-nombre(x) = type(x) in (int, float, decimal)
 

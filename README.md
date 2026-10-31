@@ -38,7 +38,7 @@ Click a drawing to see its code.
 
 ```typ
 #trig-circle(
-  radius: 2.5,
+  radius: 2,
 )
 ```
 
@@ -77,9 +77,11 @@ Click a drawing to see its code.
 
 ```typ
 #trig-circle(
-  radius: 1.5,
+  radius: 1.55,
   show-tan: true,
   show-lines: false,
+  show-angles: false,
+  show-values: false,
 )
 ```
 
@@ -124,9 +126,9 @@ Click a drawing to see its code.
 
 ```typ
 #trig-circle(
-  radius: 1.5,
+  radius: 1,
   remarkable: false,
-  show-ticks: true,
+  show-ticks: false,
   tc-point(80, $A$),
   tc-point(0.8 * calc.pi * 1rad, $B$),
   tc-point(180deg, $C$),
@@ -138,6 +140,24 @@ Click a drawing to see its code.
 
 <details>
 <summary><img src="images/04-02.svg" alt="exemple 4.2"></summary>
+
+```typ
+#trig-circle(
+  radius: 1.5,
+  remarkable: false,
+  tc-point(90, $A$, mark: "o"),
+  tc-point(150, $B$, mark: "square*", color: blue),
+  tc-point(210, $C$, mark: "triangle"),
+  tc-point(270, $D$, mark: "star*", color: red),
+  tc-point(330, $E$, mark: "x", mark-size: 0.25),
+  tc-point(30, $F$, mark: "|"),
+)
+```
+
+</details>
+
+<details>
+<summary><img src="images/04-03.svg" alt="exemple 4.3"></summary>
 
 ```typ
 #trig-circle(
@@ -155,7 +175,7 @@ Click a drawing to see its code.
 </details>
 
 <details>
-<summary><img src="images/04-03.svg" alt="exemple 4.3"></summary>
+<summary><img src="images/04-04.svg" alt="exemple 4.4"></summary>
 
 ```typ
 #trig-circle(
@@ -164,8 +184,10 @@ Click a drawing to see its code.
   show-origin: true,
   show-direction: true,
   tc-arc(20, 110),
-  tc-ray(20, $U$, color: green, arrow: true),
-  tc-ray(110, $V$, color: orange, arrow: true),
+  tc-point(20, $U$, color: green),
+  tc-point(110, $V$, color: orange),
+  tc-vector(20, $arrow(u)$, from: (0.15, -0.85), color: green),
+  tc-vector(110, $arrow(v)$, from: (-0.35, -0.9), color: orange),
   tc-angle(20, 110, $(arrow(u), arrow(v))$),
 )
 ```
@@ -179,7 +201,7 @@ Click a drawing to see its code.
 
 ```typ
 #trig-circle(
-  radius: 1,
+  radius: 3,
   remarkable: false,
   show-vectors: true,
   tc-wind(2, $M(2)$),
@@ -194,7 +216,7 @@ Click a drawing to see its code.
 
 ```typ
 #trig-circle(
-  radius: 0.8,
+  radius: 3,
   remarkable: false,
   show-direction: true,
   real-line-label: [axe réel],
@@ -309,6 +331,11 @@ alone, to put in your own `cetz.canvas` (example 7).
 | `angles-offset` | `10pt` | distance from the circle to the angles |
 | `background` | `white` | background behind values and angles |
 
+Beyond a radius of 1, everything added to the circle grows with it, half as
+fast as the radius (twice as big at radius 3): the elements (names, points, arrow heads) and the frame (O, ticks,
+i and j, I, real line, positive direction). Line thicknesses do not change,
+nor do the remarkable values and angles of ProfLycee.
+
 ## Elements
 
 Each element takes its angle(s), then an optional name, then keys. Names are
@@ -316,8 +343,9 @@ placed outside the circle, never across an axis.
 
 | Element | Keys (default) | Draws |
 |---|---|---|
-| `tc-point(angle, name)` | `color` (`black`), `anchor` (`auto`) | a point of the circle |
+| `tc-point(angle, name)` | `color` (`black`), `anchor` (`auto`), `mark` (`"*"`), `mark-size` (`auto`) | a point of the circle; `mark`: `"*"`, `"o"`, `"square"`, `"triangle"`, `"diamond"`, `"star"` (a final `*` fills them: `"square*"`…), `"+"`, `"x"`, `"\|"` (radial), `"-"` (tangent) or `none`; `mark-size`: width in cm (`auto`: 0.1 for `"*"`, 0.15 otherwise) |
 | `tc-ray(angle, name)` | `color` (`black`), `thickness` (`auto`: the circle's), `arrow` (`false`), `label` (`none`), `copy` (`none`), `copy-name` (`none`) | a ray from O (a vector with `arrow: true`); `label` in the middle; `copy: (x, y)`: another representative of the vector, starting at (x, y) in radii |
+| `tc-vector(angle, name)` | `from` (`(0, 0)`), `length` (`1`), `color` (`black`), `thickness` (`auto`) | a vector of direction `angle`, anywhere: `from` is its origin, a point `(x, y)` in radii or an angle (that point of the circle); `length` in radii; the name goes in the middle, on its left |
 | `tc-arc(from, to, name)` | `color` (`red`), `thickness` (`2pt`), `arrow` (`false`) | an arc of the circle |
 | `tc-angle(from, to, name)` | `color` (`purple`), `radius` (`0.4`, in radii), `fill` (`none`) | an angle at the centre |
 | `tc-wind(x, name)` | `color` (green), `segment` (`true`), `arc` (`true`) | the real `x` wound on the circle: segment from I to M(1 ; x), arc from I, spiral |

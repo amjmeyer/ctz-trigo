@@ -27,3 +27,24 @@
 #egal(tc-wind(2).x, 2.0, quoi: "réel enroulé")
 #egal(tc-interval(0, 1).from, 0.0, quoi: "intervalle")
 #egal(tc-cos-eq(60).lines, true, quoi: "lines")
+
+// marques des points
+#egal(tc-point(10).mark, "*", quoi: "marque par défaut")
+#egal(tc-point(10).mark-size, 0.1, quoi: "taille du disque plein")
+#egal(tc-point(10, mark: "o").mark-size, 0.15, quoi: "taille des autres formes")
+#egal(tc-point(10, mark: "x", mark-size: 0.3).mark-size, 0.3, quoi: "taille donnée")
+#egal(tc-point(10, mark: none).mark, none, quoi: "sans marque")
+
+// vecteur d'origine quelconque
+#{
+  let v = tc-vector(30, $arrow(u)$)
+  egal(v._ctz-trigo, "vector", quoi: "sorte")
+  egal(v.origin, (0.0, 0.0), quoi: "origine par défaut")
+  egal(v.length, 1.0, quoi: "vecteur unitaire")
+}
+#egal(tc-vector(30, from: (1, -0.5)).origin, (1.0, -0.5), quoi: "origine (x, y)")
+#{
+  let (x, y) = tc-vector(30, from: 90deg).origin
+  proche(x, 0, quoi: "origine sur le cercle (x)")
+  proche(y, 1, quoi: "origine sur le cercle (y)")
+}

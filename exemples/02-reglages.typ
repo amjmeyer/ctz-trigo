@@ -11,7 +11,9 @@
 )
 
 #trig-circle(
-  radius: 1.5,
+  radius: 1.55,
   show-tan: true,
   show-lines: false,
+  show-angles: false,
+  show-values: false,
 )

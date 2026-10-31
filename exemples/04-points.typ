@@ -6,13 +6,24 @@
 Angles are numbers of degrees (`80`) or Typst angles (`180deg`, `calc.pi / 4 * 1rad`).
 
 #trig-circle(
-  radius: 1.5,
+  radius: 1,
   remarkable: false,
-  show-ticks: true,
+  show-ticks: false,
   tc-point(80, $A$),
   tc-point(0.8 * calc.pi * 1rad, $B$),
   tc-point(180deg, $C$),
   tc-point(-90, $D$, color: red),
+)
+
+#trig-circle(
+  radius: 1.5,
+  remarkable: false,
+  tc-point(90, $A$, mark: "o"),
+  tc-point(150, $B$, mark: "square*", color: blue),
+  tc-point(210, $C$, mark: "triangle"),
+  tc-point(270, $D$, mark: "star*", color: red),
+  tc-point(330, $E$, mark: "x", mark-size: 0.25),
+  tc-point(30, $F$, mark: "|"),
 )
 
 #trig-circle(
@@ -32,7 +43,9 @@ Angles are numbers of degrees (`80`) or Typst angles (`180deg`, `calc.pi / 4 * 1
   show-origin: true,
   show-direction: true,
   tc-arc(20, 110),
-  tc-ray(20, $U$, color: green, arrow: true),
-  tc-ray(110, $V$, color: orange, arrow: true),
+  tc-vector(20, $arrow(u)$, from: (0.15, -0.85), color: green),
+  tc-vector(110, $arrow(v)$, from: (-0.35, -0.9), color: orange),
+  tc-ray(20, $U$, color: green),
+  tc-ray(110, $V$, color: orange),
   tc-angle(20, 110, $(arrow(u), arrow(v))$),
 )

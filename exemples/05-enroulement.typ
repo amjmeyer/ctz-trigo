@@ -7,7 +7,7 @@
 appears as soon as there is a `tc-wind` or a `tc-interval`.
 
 #trig-circle(
-  radius: 1,
+  radius: 3,
   remarkable: false,
   show-vectors: true,
   tc-wind(2, $M(2)$),
@@ -15,7 +15,7 @@ appears as soon as there is a `tc-wind` or a `tc-interval`.
 )
 
 #trig-circle(
-  radius: 0.8,
+  radius: 3,
   remarkable: false,
   show-direction: true,
   real-line-label: [axe réel],

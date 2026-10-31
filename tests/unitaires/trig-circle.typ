@@ -25,3 +25,11 @@
   cetz.draw.content((2, 0), [x])
 }))
 #context egal(textes("d"), "Bx", quoi: "trig-circle-draw")
+
+// toutes les marques se dessinent
+#import "/src/outils.typ": _marques
+#trig-circle(radius: 1, remarkable: false, .._marques.map(m => tc-point(30, mark: m)), tc-point(60, [A], mark: none))
+
+// nom d'un vecteur
+#releve-textes("v", trig-circle(remarkable: false, tc-vector(30, [u], from: (0.5, -0.5))))
+#context egal(textes("v"), "u", quoi: "nom du vecteur")

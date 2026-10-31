@@ -52,7 +52,43 @@
   (330, $(11pi)/6$),
 )
 
-#let _sortes = ("point", "ray", "arc", "angle", "wind", "interval", "cos-eq", "sin-eq", "cos-sin")
+// Marque d'un point p du cercle, d'angle a (en degrés) : forme (voir
+// _marques), largeur t, couleur ; une marque creuse est remplie par le fond,
+// pour que le cercle ne la traverse pas.
+#let _marque(p, forme, t, couleur, a, fond) = {
+  import cetz.draw: *
+  let (x, y) = p
+  let h = t / 2
+  let trait = couleur + 0.8pt
+  let remplissage = if forme.ends-with("*") { couleur } else { fond }
+  // polygone régulier de n sommets, le premier à l'angle a0, de rayon r
+  let poly(n, r, a0, r2: none) = line(
+    ..range(if r2 == none { n } else { 2 * n }).map(i => {
+      let (pas, rr) = if r2 == none { (360 / n, r) } else { (180 / n, if calc.even(i) { r } else { r2 }) }
+      let b = (a0 + i * pas) * 1deg
+      (x + rr * calc.cos(b), y + rr * calc.sin(b))
+    }),
+    close: true, stroke: trait, fill: remplissage,
+  )
+  // segment de longueur t centré en p, de direction d (en degrés)
+  let trait-dir(d) = line(
+    (x - h * calc.cos(d * 1deg), y - h * calc.sin(d * 1deg)),
+    (x + h * calc.cos(d * 1deg), y + h * calc.sin(d * 1deg)),
+    stroke: trait,
+  )
+  if forme == "*" { circle(p, radius: h, fill: couleur, stroke: none) }
+  else if forme == "o" { circle(p, radius: h, fill: fond, stroke: trait) }
+  else if forme.starts-with("square") { poly(4, h * calc.sqrt(2), 45) }
+  else if forme.starts-with("triangle") { poly(3, h * 1.15, 90) }
+  else if forme.starts-with("diamond") { poly(4, h * 1.2, 0) }
+  else if forme.starts-with("star") { poly(5, h * 1.3, 90, r2: h * 0.55) }
+  else if forme == "+" { trait-dir(0); trait-dir(90) }
+  else if forme == "x" { trait-dir(45); trait-dir(-45) }
+  else if forme == "|" { trait-dir(a) }
+  else if forme == "-" { trait-dir(a + 90) }
+}
+
+#let _sortes = ("point", "ray", "vector", "arc", "angle", "wind", "interval", "cos-eq", "sin-eq", "cos-sin")
 
 #let trig-circle-draw(
   ..elements,
@@ -88,7 +124,7 @@
   let elements = elements.pos()
   for e in elements {
     if type(e) != dictionary or e.at("_ctz-trigo", default: none) not in _sortes {
-      panic("trig-circle: expected elements made by tc-point, tc-ray, tc-arc, tc-angle, tc-wind, tc-interval, tc-cos-eq, tc-sin-eq or tc-cos-sin, not " + repr(e))
+      panic("trig-circle: expected elements made by tc-point, tc-ray, tc-vector, tc-arc, tc-angle, tc-wind, tc-interval, tc-cos-eq, tc-sin-eq or tc-cos-sin, not " + repr(e))
     }
   }
   if type(radius) not in (int, float) or radius <= 0 {
@@ -112,9 +148,17 @@
   let etiquette(taille, corps) = box(fill: background, inset: 1.2pt, text(size: taille, corps))
   let val(corps) = etiquette(values-size, corps)
   let ang(corps) = etiquette(angles-size, corps)
-  // nom d'un élément ajouté, et point marqué (même taille partout)
-  let nom(corps, couleur) = text(size: names-size, fill: couleur, corps)
-  let marque(p, couleur: black) = circle(p, radius: 0.05, fill: couleur, stroke: none)
+  // Éléments ajoutés (tc-*) et repère (O, graduations, i, j, I, droite
+  // réelle, sens direct) : noms, points et pointes grandissent avec le
+  // cercle au-delà d'un rayon de 1 cm, deux fois moins vite que lui (k = 2 au
+  // rayon 3), et gardent leur taille en dessous. Les traits gardent leur
+  // épaisseur ; valeurs et angles remarquables, axes et tangente (ProfLycee)
+  // ne changent pas.
+  let k = calc.max(1, (1 + R) / 2)
+  let rep(corps) = etiquette(values-size * k, corps)
+  let nom(corps, couleur) = text(size: names-size * k, fill: couleur, corps)
+  let marque(p, couleur: black, r: 0.05) = circle(p, radius: r * k, fill: couleur, stroke: none)
+  let pointe(couleur) = (end: "stealth", fill: couleur, scale: k)
 
   // Valeurs remarquables (cos = sin pour les angles de 30°, 45°, 60°)
   let remarquables = (
@@ -165,27 +209,26 @@
 
   // --- Repère : O, graduations ±1, vecteurs i et j -------------------
   if show-origin and not show-values {
-    content((0, 0), val($O$), anchor: "north-east", padding: 0.04)
+    content((0, 0), rep($O$), anchor: "north-east", padding: 0.04 * k)
   }
   if show-ticks {
-    let g = 0.06
+    let g = 0.06 * k
     for s in (1, -1) {
       line((s * R, -g), (s * R, g), stroke: black + thickness)
       line((-g, s * R), (g, s * R), stroke: black + thickness)
     }
     // sous l'axe des abscisses, à gauche de l'axe des ordonnées : les noms
     // des points (à l'extérieur du cercle, dans leur direction) restent libres
-    content((R, 0), val($1$), anchor: "north", padding: 0.06)
-    content((-R, 0), val($-1$), anchor: "north", padding: 0.06)
-    content((0, R), val($1$), anchor: "east", padding: 0.06)
-    content((0, -R), val($-1$), anchor: "east", padding: 0.06)
+    content((R, 0), rep($1$), anchor: "north", padding: 0.06 * k)
+    content((-R, 0), rep($-1$), anchor: "north", padding: 0.06 * k)
+    content((0, R), rep($1$), anchor: "east", padding: 0.06 * k)
+    content((0, -R), rep($-1$), anchor: "east", padding: 0.06 * k)
   }
   if show-vectors {
-    let fleche = (end: "stealth", fill: black)
-    line((0, 0), (R, 0), stroke: black + 1.5 * thickness, mark: fleche)
-    line((0, 0), (0, R), stroke: black + 1.5 * thickness, mark: fleche)
-    content((R / 2, 0), val($arrow(i)$), anchor: "north", padding: 0.06)
-    content((0, R / 2), val($arrow(j)$), anchor: "east", padding: 0.06)
+    line((0, 0), (R, 0), stroke: black + 1.5 * thickness, mark: pointe(black))
+    line((0, 0), (0, R), stroke: black + 1.5 * thickness, mark: pointe(black))
+    content((R / 2, 0), rep($arrow(i)$), anchor: "north", padding: 0.06 * k)
+    content((0, R / 2), rep($arrow(j)$), anchor: "east", padding: 0.06 * k)
   }
 
   // --- Sens direct ----------------------------------------------------
@@ -197,9 +240,9 @@
       stop: 70deg,
       radius: rs,
       stroke: red + thickness,
-      mark: (end: "stealth", fill: red),
+      mark: pointe(red),
     )
-    content((rs * calc.cos(45deg), rs * calc.sin(45deg)), text(fill: red, size: angles-size, $+$), anchor: "south-west", padding: 0.06)
+    content((rs * calc.cos(45deg), rs * calc.sin(45deg)), text(fill: red, size: angles-size * k, $+$), anchor: "south-west", padding: 0.06 * k)
   }
 
   // --- Valeurs remarquables -----------------------------------------
@@ -256,8 +299,8 @@
       line((0, 0), autre, stroke: (paint: e.color, dash: "dashed", thickness: 0.6pt))
     }
     line(autre, (c, s), stroke: e.color + 1.6pt)
-    circle((c, s), radius: 0.06, fill: e.color, stroke: none)
-    circle(autre, radius: 0.06, fill: e.color, stroke: none)
+    marque((c, s), couleur: e.color, r: 0.06)
+    marque(autre, couleur: e.color, r: 0.06)
   }
 
   // --- Point M(cos θ ; sin θ) ----------------------------------------
@@ -266,13 +309,13 @@
     let (c, s) = pt(a)
     let bleu = rgb("#0074D9")
     let rouge = rgb("#C2150C")
-    let r-arc = calc.min(0.5, R / 5)
+    let r-arc = R / 5
     // angle nul : pas d'arc à marquer (CeTZ refuse un arc de 0°)
     if a != 0 {
-      arc((r-arc, 0), start: 0deg, stop: a * 1deg, radius: r-arc, stroke: purple + 1pt, mark: (end: "stealth", fill: purple))
+      arc((r-arc, 0), start: 0deg, stop: a * 1deg, radius: r-arc, stroke: purple + 1pt, mark: pointe(purple))
       content(
-        ((r-arc + 0.18) * calc.cos(a / 2 * 1deg), (r-arc + 0.18) * calc.sin(a / 2 * 1deg)),
-        text(fill: purple, size: angles-size, e.angle-name),
+        ((r-arc + 0.18 * k) * calc.cos(a / 2 * 1deg), (r-arc + 0.18 * k) * calc.sin(a / 2 * 1deg)),
+        text(fill: purple, size: angles-size * k, e.angle-name),
       )
     }
     line((0, 0), (c, s), stroke: black + thickness)
@@ -284,15 +327,15 @@
       if s >= 0 { "north" } else { "south" },
       if c >= 0 { "east" } else { "west" },
     )
-    content((c, 0), text(fill: bleu, size: values-size + 1pt, $cos(#e.angle-name)$), anchor: anc, padding: 0.08)
-    content((0, s), text(fill: rouge, size: values-size + 1pt, $sin(#e.angle-name)$), anchor: ans, padding: 0.08)
-    circle((c, s), radius: 0.05, fill: black, stroke: none)
+    content((c, 0), text(fill: bleu, size: (values-size + 1pt) * k, $cos(#e.angle-name)$), anchor: anc, padding: 0.08 * k)
+    content((0, s), text(fill: rouge, size: (values-size + 1pt) * k, $sin(#e.angle-name)$), anchor: ans, padding: 0.08 * k)
+    marque((c, s))
     if e.name != none {
       content(
         (c, s),
-        e.name,
+        text(size: k * 1em, e.name),
         anchor: (if s >= 0 { "south" } else { "north" }) + "-" + (if c >= 0 { "west" } else { "east" }),
-        padding: 0.08,
+        padding: 0.08 * k,
       )
     }
   }
@@ -303,39 +346,52 @@
     if e.fill != none {
       line((0, 0), .._arc(e.from, e.to, r), close: true, fill: e.fill, stroke: none)
     }
-    line(.._arc(e.from, e.to, r), stroke: e.color + 0.7pt, mark: (end: "stealth", fill: e.color))
+    line(.._arc(e.from, e.to, r), stroke: e.color + 0.7pt, mark: pointe(e.color))
     if e.name != none {
       let m = (e.from + e.to) / 2
-      content(((r + 0.1) * calc.cos(m * 1deg), (r + 0.1) * calc.sin(m * 1deg)), nom(e.name, e.color), anchor: _ancre-ext(m))
+      content(((r + 0.1 * k) * calc.cos(m * 1deg), (r + 0.1 * k) * calc.sin(m * 1deg)), nom(e.name, e.color), anchor: _ancre-ext(m))
     }
   }
   for e in sorte("arc") {
-    let fl = if e.arrow { (end: "stealth", fill: e.color) } else { none }
+    let fl = if e.arrow { pointe(e.color) } else { none }
     line(.._arc(e.from, e.to, R), stroke: e.color + e.thickness, mark: fl)
     let m = (e.from + e.to) / 2
-    if e.name != none { content(pt(m), nom(e.name, e.color), anchor: _ancre-ext(m), padding: 0.1) }
+    if e.name != none { content(pt(m), nom(e.name, e.color), anchor: _ancre-ext(m), padding: 0.1 * k) }
+  }
+  for e in sorte("vector") {
+    let a = e.angle
+    let o = e.origin.map(c => c * R)
+    let l = e.length * R
+    let b = (o.at(0) + l * calc.cos(a * 1deg), o.at(1) + l * calc.sin(a * 1deg))
+    let ep = if e.thickness == auto { thickness } else { e.thickness }
+    line(o, b, stroke: e.color + ep, mark: pointe(e.color))
+    if e.name != none {
+      // au milieu, du côté direct (à gauche en suivant le vecteur)
+      let m = ((o.at(0) + b.at(0)) / 2, (o.at(1) + b.at(1)) / 2)
+      content(m, nom(e.name, e.color), anchor: _ancre-ext(a + 90), padding: 0.08 * k)
+    }
   }
   for e in sorte("ray") {
     let a = e.angle
     let ep = if e.thickness == auto { thickness } else { e.thickness }
-    let fl = if e.arrow { (end: "stealth", fill: e.color) } else { none }
+    let fl = if e.arrow { pointe(e.color) } else { none }
     line((0, 0), pt(a), stroke: e.color + ep, mark: fl)
     if e.name != none {
-      content(pt(a), nom(e.name, e.color), anchor: _ancre-ext(a), padding: 0.08)
+      content(pt(a), nom(e.name, e.color), anchor: _ancre-ext(a), padding: 0.08 * k)
     }
     // étiquette au milieu, du côté horaire du rayon (sous un rayon horizontal)
     if e.label != none {
-      content(pt(a).map(c => c / 2), nom(e.label, e.color), anchor: _ancre-ext(a - 90), padding: 0.06)
+      content(pt(a).map(c => c / 2), nom(e.label, e.color), anchor: _ancre-ext(a - 90), padding: 0.06 * k)
     }
     // représentant du même vecteur, d'origine donnée (en rayons)
     if e.copy != none {
       let o = e.copy.map(c => c * R)
       let b = (o.at(0) + pt(a).at(0), o.at(1) + pt(a).at(1))
-      line(o, b, stroke: e.color + ep, mark: (end: "stealth", fill: e.color))
+      line(o, b, stroke: e.color + ep, mark: pointe(e.color))
       if e.copy-name != none {
         // nom à gauche du vecteur (côté direct), décalé perpendiculairement
-        let n = calc.cos((a + 90) * 1deg) * 0.25
-        let m = calc.sin((a + 90) * 1deg) * 0.25
+        let n = calc.cos((a + 90) * 1deg) * 0.25 * k
+        let m = calc.sin((a + 90) * 1deg) * 0.25 * k
         content(((o.at(0) + b.at(0)) / 2 + n, (o.at(1) + b.at(1)) / 2 + m), nom(e.copy-name, e.color))
       }
     }
@@ -347,10 +403,10 @@
     // au moins 0,5 cm au-dessus du dernier point : son nom et celui de la droite
     // ne se chevauchent pas
     let (bas, haut) = (calc.min(-0.6 * R, ..hauts) - 0.1, calc.max(1.2 * R, ..hauts) + calc.max(0.3 * R, 0.5))
-    line((R, bas), (R, haut), stroke: black + 0.5 * thickness, mark: (end: "stealth", fill: black))
-    content((R, haut), val(real-line-label), anchor: "west", padding: 0.1)
+    line((R, bas), (R, haut), stroke: black + 0.5 * thickness, mark: pointe(black))
+    content((R, haut), rep(real-line-label), anchor: "west", padding: 0.1 * k)
     marque((R, 0))
-    content((R, 0), val($I$), anchor: "north-west", padding: 0.06)
+    content((R, 0), rep($I$), anchor: "north-west", padding: 0.06 * k)
   }
   for e in sorte("wind") {
     let (x, coul) = (e.x, e.color)
@@ -369,7 +425,7 @@
     )
     marque((R, x * R), couleur: coul)
     // nom à droite de la droite réelle, sans la chevaucher
-    if e.name != none { content((R, x * R), nom(e.name, coul), anchor: "west", padding: 0.08) }
+    if e.name != none { content((R, x * R), nom(e.name, coul), anchor: "west", padding: 0.08 * k) }
     marque(pt(deg))
   }
   for e in sorte("interval") {
@@ -378,9 +434,9 @@
 
   // --- Points nommés ---------------------------------------------------
   for e in sorte("point") {
-    marque(pt(e.angle), couleur: e.color)
+    if e.mark != none { _marque(pt(e.angle), e.mark, e.mark-size * k, e.color, e.angle, background) }
     let ancre = if e.anchor == auto { _ancre-ext(e.angle) } else { e.anchor }
-    if e.name != none { content(pt(e.angle), nom(e.name, e.color), anchor: ancre, padding: 0.08) }
+    if e.name != none { content(pt(e.angle), nom(e.name, e.color), anchor: ancre, padding: 0.08 * k) }
   }
 }
 

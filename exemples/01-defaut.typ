@@ -4,7 +4,7 @@
 = The full circle, as in ProfLycee
 
 #trig-circle(
-  radius: 2.5,
+  radius: 2,
 )
 
 #trig-circle(

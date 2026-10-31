@@ -10,14 +10,46 @@
 // ici en degrés. Le nom, facultatif, est le seul argument positionnel après
 // l'angle (ou les deux angles) : tc-point(80deg, $A$).
 
-#import "outils.typ": _deg, _reel, _nom
+#import "outils.typ": _deg, _reel, _nom, _marques, _est-nombre
 
-// Point du cercle, marqué et nommé à l'extérieur du cercle.
-#let tc-point(a, ..nom, color: black, anchor: auto) = {
+// Point du cercle, marqué et nommé à l'extérieur du cercle ; mark : forme
+// de la marque (voir _marques) ou none, mark-size : sa largeur en cm (pour
+// un rayon jusqu'à 1, elle grandit ensuite avec le cercle) ; auto : 0,1 pour
+// le disque plein, 0,15 pour les autres formes, moins lisibles en petit.
+#let tc-point(a, ..nom, color: black, anchor: auto, mark: "*", mark-size: auto) = {
   if anchor != auto and type(anchor) != str {
     panic("tc-point: anchor must be auto or a CeTZ anchor such as \"south-west\", not " + repr(anchor))
   }
-  (_ctz-trigo: "point", angle: _deg(a, "tc-point"), name: _nom(nom, "tc-point"), color: color, anchor: anchor)
+  if mark != none and mark not in _marques {
+    panic("tc-point: mark must be none or one of " + _marques.map(repr).join(", ") + ", not " + repr(mark))
+  }
+  if mark-size == auto { mark-size = if mark == "*" { 0.1 } else { 0.15 } }
+  if not _est-nombre(mark-size) or mark-size <= 0 {
+    panic("tc-point: mark-size must be auto or a positive number (in cm), not " + repr(mark-size))
+  }
+  (
+    _ctz-trigo: "point", angle: _deg(a, "tc-point"), name: _nom(nom, "tc-point"),
+    color: color, anchor: anchor, mark: mark, mark-size: mark-size,
+  )
+}
+
+// Vecteur de direction donnée, d'origine quelconque : from est un point
+// (x, y), en rayons, ou un angle (le point du cercle) ; length en rayons
+// (1 : vecteur unitaire). Le nom est placé au milieu, du côté direct.
+#let tc-vector(a, ..nom, from: (0, 0), length: 1, color: black, thickness: auto) = {
+  let origine = if type(from) == array {
+    if from.len() != 2 { panic("tc-vector: from must be a point (x, y), in radii, or an angle, not " + repr(from)) }
+    from.map(c => _reel(c, "tc-vector"))
+  } else if type(from) == angle or _est-nombre(from) {
+    let b = _deg(from, "tc-vector") * 1deg
+    (calc.cos(b), calc.sin(b))
+  } else {
+    panic("tc-vector: from must be a point (x, y), in radii, or an angle, not " + repr(from))
+  }
+  (
+    _ctz-trigo: "vector", angle: _deg(a, "tc-vector"), name: _nom(nom, "tc-vector"),
+    origin: origine, length: _reel(length, "tc-vector"), color: color, thickness: thickness,
+  )
 }
 
 // Rayon de O au point du cercle (vecteur si arrow: true) ; label : texte au

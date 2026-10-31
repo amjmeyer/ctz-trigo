@@ -8,6 +8,7 @@
 #import "elements.typ": (
   tc-point,
   tc-ray,
+  tc-vector,
   tc-arc,
   tc-angle,
   tc-wind,
