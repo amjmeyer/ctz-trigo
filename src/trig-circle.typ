@@ -54,8 +54,9 @@
 
 // Marque d'un point p du cercle, d'angle a (en degrés) : forme (voir
 // _marques), largeur t, couleur ; une marque creuse est remplie par le fond,
-// pour que le cercle ne la traverse pas.
-#let _marque(p, forme, t, couleur, a, fond) = {
+// pour que le cercle ne la traverse pas. Sur la couche 1 : au-dessus de tout
+// le reste, même de ce que l'utilisateur dessine après dans son canvas.
+#let _marque(p, forme, t, couleur, a, fond) = cetz.draw.on-layer(1, {
   import cetz.draw: *
   let (x, y) = p
   let h = t / 2
@@ -86,7 +87,7 @@
   else if forme == "x" { trait-dir(45); trait-dir(-45) }
   else if forme == "|" { trait-dir(a) }
   else if forme == "-" { trait-dir(a + 90) }
-}
+})
 
 #let _sortes = ("point", "ray", "vector", "arc", "angle", "wind", "interval", "cos-eq", "sin-eq", "cos-sin")
 
@@ -157,7 +158,8 @@
   let k = calc.max(1, (1 + R) / 2)
   let rep(corps) = etiquette(values-size * k, corps)
   let nom(corps, couleur) = text(size: names-size * k, fill: couleur, corps)
-  let marque(p, couleur: black, r: 0.05) = circle(p, radius: r * k, fill: couleur, stroke: none)
+  // points marqués : sur la couche 1, comme _marque
+  let marque(p, couleur: black, r: 0.05) = on-layer(1, circle(p, radius: r * k, fill: couleur, stroke: none))
   let pointe(couleur) = (end: "stealth", fill: couleur, scale: k)
 
   // Valeurs remarquables (cos = sin pour les angles de 30°, 45°, 60°)

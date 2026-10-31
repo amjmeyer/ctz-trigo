@@ -16,3 +16,5 @@
   `mark-size`.
 - `tc-vector`: a vector of given direction drawn anywhere, not only from O.
 - `tc-wind`: keys `mark` and `mark-size`, for its two points.
+- Marked points are drawn on top (CeTZ layer 1), even above what is drawn
+  afterwards in the same canvas.

@@ -14,4 +14,4 @@ keywords = [
 categories = ["visualization", "components"]
 disciplines = ["education", "mathematics"]
 compiler = "0.15.0"
-exclude = ["tests/*", "exemples/*", "images/*", "CHANGELOG.md", "CLAUDE.md", "AGENTS.md"]
+exclude = ["tests/*", "exemples/*", "images/*", "toot/*", "CHANGELOG.md", "CLAUDE.md", "AGENTS.md"]

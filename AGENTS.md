@@ -3,8 +3,10 @@
 Typst package that draws the trigonometric unit circle, after `\CercleTrigo`
 of Cédric Pierquet's LaTeX package ProfLycee, with the additions of the
 author's `proflycee-minimal` package (where it comes from). Built on CeTZ.
-Public names, keys, error messages and README are in English; comments and
-internal names (prefixed with `_`, or local variables) are in French.
+Public names, keys and error messages are in English; the README and the
+documentation (`toot/`) in French (the README opens with an English summary
+for Universe); comments and internal names (prefixed with `_`, or local
+variables) in French.
 
 ## Layout
 
@@ -17,8 +19,9 @@ src/
   elements.typ     tc-point, tc-ray, tc-vector, tc-arc, tc-angle, tc-wind,
                    tc-interval, tc-cos-eq, tc-sin-eq, tc-cos-sin
   trig-circle.typ  the drawing
-exemples/          01-… to 07-…: one file per use case
-  readme.sh        rebuilds the "Examples" part of the README (images/)
+exemples/          01-… to 07-…: one file per use case (visual tests)
+images/apercu.svg  the README image, from its code block
+toot/              online documentation (toot), published on gh-pages
 tests/lancer.sh    runs all the tests
 ```
 
@@ -47,8 +50,9 @@ angles (`val`, `ang`). Use these helpers for any new element.
 - Public names in English kebab-case; elements prefixed with `tc-`.
 - 3-line MIT header in every `.typ` of `src/`. Short comments.
 - Independent rewrite: never copy ProfLycee's code (LPPL).
-- A new key or element: an example in `exemples/`, the README tables (and
-  the ProfLycee table if it comes from there), a unit test and an error test.
+- A new key or element: an example in `exemples/`, the documentation
+  (`toot/src/`, and its ProfLycee table if it comes from there), a unit test
+  and an error test.
 
 ## Tests
 
@@ -58,9 +62,8 @@ imported), `tests/unitaires/*.typ` (assertions, tools in `aide.typ`),
 `tests/erreurs/*.typ` (must fail with the message of the first line,
 `// attendu : …`). Exit code = number of failures.
 
-After changing an example or the rendering: `exemples/readme.sh`. A drawing
-= a multi-line call at the start of a line whose first line ends with `(`,
-`[` or `{` and which closes with `)`, `]` or `})` alone on its line.
+After changing the rendering, rebuild `images/apercu.svg` from the README
+code block, and look at the documentation (`toot-builder serve` in `toot/`).
 
 ## Known pitfalls
 

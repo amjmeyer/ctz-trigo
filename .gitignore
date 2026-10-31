@@ -1,4 +1,6 @@
 # PDF produits en testant les exemples
 *.pdf
+# Site de la doc, construit par toot-builder (publié sur gh-pages)
+toot/build/
 # Notes pour Claude (pas sur GitHub)
 CLAUDE.md
