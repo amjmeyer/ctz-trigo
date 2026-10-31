@@ -1,0 +1,4 @@
+# PDF produits en testant les exemples
+*.pdf
+# Notes pour Claude (pas sur GitHub)
+CLAUDE.md
