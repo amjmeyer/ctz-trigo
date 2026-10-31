@@ -6,6 +6,7 @@ authors = ["Arthur Meyer"]
 license = "MIT"
 description = "Draw the trigonometric unit circle with CeTZ, after ProfLycee."
 repository = "https://github.com/amjmeyer/ctz-trigo"
+homepage = "https://amjmeyer.github.io/ctz-trigo/"
 keywords = [
   "cercle trigonométrique", "trigonometric circle", "unit circle",
   "trigonometry", "trigonométrie", "radian", "ProfLycee",
