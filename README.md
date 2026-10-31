@@ -3,6 +3,8 @@
 *Draw the trigonometric unit circle with CeTZ, after ProfLycee's
 `\CercleTrigo`. Documentation in French below.*
 
+**Documentation : https://amjmeyer.github.io/ctz-trigo/**
+
 Le cercle trigonométrique en Typst, d'après `\CercleTrigo` du paquet LaTeX
 [ProfLycee](https://ctan.org/pkg/proflycee) de Cédric Pierquet, construit
 avec [CeTZ](https://typst.app/universe/package/cetz).
@@ -22,8 +24,6 @@ avec [CeTZ](https://typst.app/universe/package/cetz).
   tc-angle(0, 1rad, $1 "rad"$),
 )
 ```
-
-**Documentation** : https://amjmeyer.github.io/ctz-trigo/
 
 ## Licence
 
