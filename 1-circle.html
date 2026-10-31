@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Le cercle</title><style>:root { --accent-color: #228b22; } </style><link rel="stylesheet" href="/ctz-trigo/resources/style.css"><script defer src="/ctz-trigo/resources/control.js"></script><style>table { border-collapse: collapse; margin: 1em 0; }
+th, td { border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent); padding: .3em .8em; text-align: left; vertical-align: top; }
+.encadre { border-left: 4px solid #16a34a; background: color-mix(in srgb, #16a34a 10%, transparent); padding: .6em 1em; margin: 1em 0; border-radius: 4px; }</style><style>/* Alignment */
+mtable.right-align mtd,
+mtable mtd.right-align,
+mtable.left-align mtd.right-align,
+mtable.aligned mtd:nth-child(odd) {
+  justify-items: end;
+  text-align: right;
+}
+mtable.cases mtd,
+mtable.left-align mtd,
+mtable mtd.left-align,
+mtable.aligned mtd:nth-child(even),
+math:is(:not([display])) > mtable.multiline-equation mtd {
+  justify-items: start;
+  text-align: left;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.left-flush {
+  padding-left: 0;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.right-flush {
+  padding-right: 0;
+}
+
+/* Tables */
+mtable {
+  math-style: inherit;
+}
+mtd {
+  math-depth: auto-add;
+  math-style: compact;
+  math-shift: compact;
+}
+
+/* Equations */
+mtable.multiline-equation mtd {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+  padding: 0;
+}
+math > mtable.multiline-equation mtr:not(:last-child) mtd {
+  padding-bottom: 0.5em;
+}
+
+/* Fractions */
+mfrac {
+  padding-inline: 0;
+  margin-inline: 0.1em;
+}
+
+/* Accents */
+mover[accent="true" i] > :first-child {
+  font-feature-settings: "dtls";
+}
+mover.dotted[accent="true" i] > :first-child {
+  font-feature-settings: "dtls" 0;
+}
+
+/* Other rules for scriptlevel, displaystyle and math-shift */
+munder > :nth-child(2),
+munderover > :nth-child(2) {
+  math-shift: compact
+}
+munder[accentunder="true" i] > :not(:first-child),
+mover[accent="true" i] > :not(:first-child) {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+}</style></head><body><div id="outline" class="hidden"><p><a href="/ctz-trigo/index.html">Accueil</a></p><p><a href="/ctz-trigo/1-circle.html">I. Le cercle</a></p><p><a href="/ctz-trigo/2-elements.html">II. Les éléments</a></p><p><a href="/ctz-trigo/3-proflycee.html">III. Depuis ProfLycee</a></p></div><header><p><button id="outline-toggle"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIj4KPHBhdGggZD0ibTIwLjc1IDdjMCAwLjQxNDIxLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1NzktMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTc5IDAuNzUgMC43NXoiLz4KPHBhdGggZD0ibTIwLjc1IDEyYzAgMC40MTQyLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1OC0wLjc1LTAuNzVzMC4zMzU3OS0wLjc1IDAuNzUtMC43NWgxNmMwLjQxNDIgMCAwLjc1IDAuMzM1OCAwLjc1IDAuNzV6Ii8+CjxwYXRoIGQ9Im0yMC43NSAxN2MwIDAuNDE0Mi0wLjMzNTggMC43NS0wLjc1IDAuNzVoLTE2Yy0wLjQxNDIxIDAtMC43NS0wLjMzNTgtMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTggMC43NSAwLjc1eiIvPgo8L2c+Cjwvc3ZnPgo=" width="24" height="24" style="display: block; width: 2em"></button><strong>ctz-trigo</strong></p><p><a href="https://typst.app/universe/package/ctz-trigo">→ Universe</a></p></header><main><h1>I. Le cercle</h1><p>Les clés de <code>trig-circle</code>. Le rayon et les longueurs sont en cm.</p><h2>Ce qui est affiché</h2><p>Par défaut, le cercle de ProfLycee : valeurs remarquables, angles et traits de construction. <code>remarkable: false</code> les retire d’un coup.</p><table><thead><tr><th><strong>Clé</strong></th><th><strong>Défaut</strong></th><th><strong>Rôle</strong></th></tr></thead><tbody><tr><td><code>radius</code></td><td><code>3</code></td><td>rayon du cercle</td></tr><tr><td><code>remarkable</code></td><td><code>true</code></td><td><code>false</code> : ni valeurs, ni angles, ni traits</td></tr><tr><td><code>show-values</code></td><td><code>true</code></td><td>valeurs de cos et sin sur les axes</td></tr><tr><td><code>show-angles</code></td><td><code>true</code></td><td>angles remarquables autour du cercle</td></tr><tr><td><code>show-lines</code></td><td><code>true</code></td><td>traits de construction en pointillés</td></tr><tr><td><code>show-points</code></td><td><code>auto</code></td><td>points des angles remarquables</td></tr><tr><td><code>minus-pi</code></td><td><code>true</code></td><td>angles dans <math><mo form="postfix" stretchy="false">]</mo><mo>−</mo><mi>𝜋</mi><mo>;</mo><mi>𝜋</mi><mo stretchy="false">]</mo></math> (<code>false</code> : dans <math><mo stretchy="false">[</mo><mn>0</mn><mo>;</mo><mn>2</mn><mi>𝜋</mi><mo form="prefix" stretchy="false">[</mo></math>)</td></tr><tr><td><code>show-tan</code></td><td><code>false</code></td><td>tangente en I avec les valeurs de tan</td></tr></tbody></table><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">1.5</span>,
+  minus-pi: <span style="color: #d73948">false</span>,
+  show-tan: <span style="color: #d73948">true</span>,
+  show-lines: <span style="color: #d73948">false</span>,
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page2-example0-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page2-example0-dark.svg"><img alt="page2-example0" src="/ctz-trigo/page2-example0-light.svg"></picture></p><p>Un gabarit vierge, avec les seuls points des angles remarquables :</p><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">2</span>,
+  show-values: <span style="color: #d73948">false</span>,
+  show-angles: <span style="color: #d73948">false</span>,
+  show-points: <span style="color: #d73948">true</span>,
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page2-example1-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page2-example1-dark.svg"><img alt="page2-example1" src="/ctz-trigo/page2-example1-light.svg"></picture></p><h2>Le repère</h2><table><thead><tr><th><strong>Clé</strong></th><th><strong>Défaut</strong></th><th><strong>Rôle</strong></th></tr></thead><tbody><tr><td><code>show-axes</code></td><td><code>true</code></td><td>axes</td></tr><tr><td><code>show-origin</code></td><td><code>false</code></td><td>nom O de l’origine</td></tr><tr><td><code>show-ticks</code></td><td><code>false</code></td><td>graduations ±1 sur les axes</td></tr><tr><td><code>show-vectors</code></td><td><code>false</code></td><td>vecteurs <math><mover accent="true"><mi>𝑖</mi><mo stretchy="true">⃗</mo></mover></math> et <math><mover accent="true"><mi>𝑗</mi><mo stretchy="true">⃗</mo></mover></math></td></tr><tr><td><code>show-direction</code></td><td><code>false</code></td><td>flèche rouge du sens direct</td></tr><tr><td><code>show-real-line</code></td><td><code>auto</code></td><td>droite réelle en I (<code>auto</code> : avec <code>tc-wind</code> ou <code>tc-interval</code>)</td></tr><tr><td><code>real-line-label</code></td><td><code>[real line]</code></td><td>son nom (<code>[axe réel]</code>…)</td></tr></tbody></table><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">1.5</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  show-origin: <span style="color: #d73948">true</span>,
+  show-vectors: <span style="color: #d73948">true</span>,
+  show-direction: <span style="color: #d73948">true</span>,
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page2-example2-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page2-example2-dark.svg"><img alt="page2-example2" src="/ctz-trigo/page2-example2-light.svg"></picture></p><h2>L’apparence</h2><table><thead><tr><th><strong>Clé</strong></th><th><strong>Défaut</strong></th><th><strong>Rôle</strong></th></tr></thead><tbody><tr><td><code>thickness</code></td><td><code>1pt</code></td><td>épaisseur du cercle et des axes</td></tr><tr><td><code>margin</code></td><td><code>0.25</code></td><td>dépassement des axes au-delà du cercle</td></tr><tr><td><code>circle-color</code></td><td><code>black</code></td><td>couleur du cercle</td></tr><tr><td><code>values-size</code></td><td><code>7pt</code></td><td>taille des valeurs</td></tr><tr><td><code>angles-size</code></td><td><code>8pt</code></td><td>taille des angles remarquables</td></tr><tr><td><code>names-size</code></td><td><code>9pt</code></td><td>taille des noms des éléments</td></tr><tr><td><code>angles-offset</code></td><td><code>10pt</code></td><td>distance entre le cercle et les angles</td></tr><tr><td><code>background</code></td><td><code>white</code></td><td>fond des valeurs, des angles et des marques creuses</td></tr></tbody></table></main><footer><a href="/ctz-trigo/index.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiBzdHJva2U9IiIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJtMTUuNDg4IDQuNDMwNmMwLjMxNDUgMC4yNjk1NyAwLjM1MDkgMC43NDMwNCAwLjA4MTMgMS4wNTc1bC01LjU4MTYgNi41MTE5IDUuNTgxNiA2LjUxMTljMC4yNjk2IDAuMzE0NSAwLjIzMzIgMC43ODgtMC4wODEzIDEuMDU3Ni0wLjMxNDUgMC4yNjk1LTAuNzg4IDAuMjMzMS0xLjA1NzUtMC4wODE0bC02LTdjLTAuMjQwNzUtMC4yODA5LTAuMjQwNzUtMC42OTUzIDAtMC45NzYybDYtN2MwLjI2OTUtMC4zMTQ0OSAwLjc0My0wLjM1MDkyIDEuMDU3NS0wLjA4MTM1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a><a href="/ctz-trigo/2-elements.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Im04LjUxMTkgNC40MzA2YzAuMzE0NDktMC4yNjk1NyAwLjc4Nzk3LTAuMjMzMTQgMS4wNTc1IDAuMDgxMzVsNiA3YzAuMjQwNyAwLjI4MDkgMC4yNDA3IDAuNjk1MyAwIDAuOTc2MmwtNiA3Yy0wLjI2OTU3IDAuMzE0NS0wLjc0MzA1IDAuMzUwOS0xLjA1NzUgMC4wODE0LTAuMzE0NDktMC4yNjk2LTAuMzUwOTItMC43NDMxLTAuMDgxMzUtMS4wNTc2bDUuNTgxNi02LjUxMTktNS41ODE2LTYuNTExOWMtMC4yNjk1Ny0wLjMxNDUtMC4yMzMxNC0wLjc4Nzk3IDAuMDgxMzUtMS4wNTc1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a></footer></body></html>
