@@ -17,9 +17,10 @@ avec [CeTZ](https://typst.app/universe/package/cetz).
 #trig-circle(
   radius: 2,
   remarkable: false,
+  show-axes: false,
   show-origin: true,
-  tc-point(80deg, $A$),
-  tc-ray(1rad, $B$, arrow: true),
+  tc-ray(0, $A$),
+  tc-ray(1rad, $B$),
   tc-arc(0, 1rad),
   tc-angle(0, 1rad, $1 "rad"$),
 )
