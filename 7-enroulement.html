@@ -1,0 +1,118 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>L’enroulement</title><style>:root { --accent-color: #228b22; } </style><link rel="stylesheet" href="/ctz-trigo/resources/style.css"><script defer src="/ctz-trigo/resources/control.js"></script><style>.encadre { border-left: 4px solid var(--c); background: color-mix(in srgb, var(--c) 10%, transparent); padding: .6em 1em; margin: 1em 0; border-radius: 4px; }
+.encadre > .titre { font-weight: bold; color: var(--c); display: block; margin-bottom: .3em; }
+.encadre.info { --c: #2563eb; }
+.encadre.astuce { --c: #16a34a; }
+.encadre.attention { --c: #ea580c; }
+.encadre.idee { --c: #9333ea; }
+.parametre { background: color-mix(in srgb, currentColor 6%, transparent); border-radius: 4px; padding: .8em 1em; margin: 1.2em 0 .6em; }
+.parametre > .nom { font-weight: bold; font-size: 1.15em; margin-right: .5em; }
+.parametre .type { font-family: monospace; font-size: .8em; padding: .1em .4em; border-radius: 3px; margin-right: .3em; background: color-mix(in srgb, currentColor 12%, transparent); }
+.parametre .defaut { display: block; font-size: .85em; opacity: .7; margin-top: .4em; }
+picture img { width: auto; max-width: 100%; zoom: 1.5; display: block; margin: 0 auto; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent); padding: .3em .8em; text-align: left; vertical-align: top; }</style><style>/* Alignment */
+mtable.right-align mtd,
+mtable mtd.right-align,
+mtable.left-align mtd.right-align,
+mtable.aligned mtd:nth-child(odd) {
+  justify-items: end;
+  text-align: right;
+}
+mtable.cases mtd,
+mtable.left-align mtd,
+mtable mtd.left-align,
+mtable.aligned mtd:nth-child(even),
+math:is(:not([display])) > mtable.multiline-equation mtd {
+  justify-items: start;
+  text-align: left;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.left-flush {
+  padding-left: 0;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.right-flush {
+  padding-right: 0;
+}
+
+/* Tables */
+mtable {
+  math-style: inherit;
+}
+mtd {
+  math-depth: auto-add;
+  math-style: compact;
+  math-shift: compact;
+}
+
+/* Equations */
+mtable.multiline-equation mtd {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+  padding: 0;
+}
+math > mtable.multiline-equation mtr:not(:last-child) mtd {
+  padding-bottom: 0.5em;
+}
+
+/* Fractions */
+mfrac {
+  padding-inline: 0;
+  margin-inline: 0.1em;
+}
+
+/* Accents */
+mover[accent="true" i] > :first-child {
+  font-feature-settings: "dtls";
+}
+mover.dotted[accent="true" i] > :first-child {
+  font-feature-settings: "dtls" 0;
+}
+
+/* Other rules for scriptlevel, displaystyle and math-shift */
+munder > :nth-child(2),
+munderover > :nth-child(2) {
+  math-shift: compact
+}
+munder[accentunder="true" i] > :not(:first-child),
+mover[accent="true" i] > :not(:first-child) {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+}</style></head><body><div id="outline" class="hidden"><p><a href="/ctz-trigo/index.html">Accueil</a></p><p><a href="/ctz-trigo/1-demarrer.html">I. Démarrer</a></p><p><a href="/ctz-trigo/2-cercle.html">II. Le cercle</a></p><p><a href="/ctz-trigo/3-repere.html">III. Le repère</a></p><p><a href="/ctz-trigo/4-points.html">IV. Les points</a></p><p><a href="/ctz-trigo/5-rayons-vecteurs.html">V. Rayons et vecteurs</a></p><p><a href="/ctz-trigo/6-arcs-angles.html">VI. Arcs et angles</a></p><p><a href="/ctz-trigo/7-enroulement.html">VII. L’enroulement</a></p><p><a href="/ctz-trigo/8-cos-sin.html">VIII. Cosinus et sinus</a></p><p><a href="/ctz-trigo/9-canvas.html">IX. Dans son canvas</a></p><p><a href="/ctz-trigo/annexes.html">Annexes</a></p></div><header><p><button id="outline-toggle"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIj4KPHBhdGggZD0ibTIwLjc1IDdjMCAwLjQxNDIxLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1NzktMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTc5IDAuNzUgMC43NXoiLz4KPHBhdGggZD0ibTIwLjc1IDEyYzAgMC40MTQyLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1OC0wLjc1LTAuNzVzMC4zMzU3OS0wLjc1IDAuNzUtMC43NWgxNmMwLjQxNDIgMCAwLjc1IDAuMzM1OCAwLjc1IDAuNzV6Ii8+CjxwYXRoIGQ9Im0yMC43NSAxN2MwIDAuNDE0Mi0wLjMzNTggMC43NS0wLjc1IDAuNzVoLTE2Yy0wLjQxNDIxIDAtMC43NS0wLjMzNTgtMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTggMC43NSAwLjc1eiIvPgo8L2c+Cjwvc3ZnPgo=" width="24" height="24" style="display: block; width: 2em"></button><strong>ctz-trigo</strong></p><p><a href="https://typst.app/universe/package/ctz-trigo">→ Universe</a></p></header><main><h1>VII. L’enroulement de la droite réelle</h1><p>Pour définir le cercle trigonométrique, on enroule la droite réelle autour du cercle : la droite est la tangente au cercle au point <math><mi>𝐼</mi><mrow><mo>(</mo><mrow><mn>1</mn><mo>;</mo><mn>0</mn></mrow><mo>)</mo></mrow></math>, et chaque réel <math><mi>𝑥</mi></math> de la droite vient se poser sur un point du cercle, son <em>image</em>. Deux éléments illustrent cette idée.</p><div class="encadre attention"><div class="titre">Un réel, pas un angle</div>Contrairement aux autres éléments, <code>tc-wind</code> et <code>tc-interval</code> prennent un <strong>réel</strong>, c’est-à-dire un point de la droite réelle (une longueur), pas un angle. Pour le réel <math><mfrac><mi>𝜋</mi><mn>2</mn></mfrac></math>, on écrit donc <code>calc.pi / 2</code>, et non <code>90</code> ni <code>90deg</code>.</div><div class="encadre info"><div class="titre">La droite réelle s'affiche toute seule</div>Dès que la figure contient un <code>tc-wind</code> ou un <code>tc-interval</code>, la droite réelle est dessinée, avec le point <math><mi>𝐼</mi></math>. Son nom se règle avec <code>real-line-label</code> (voir la <a href="/ctz-trigo/3-repere.html">partie III</a>).</div><h2>Enrouler un réel</h2><p><code>tc-wind(x, nom)</code> dessine, pour un réel <math><mi>𝑥</mi></math> :</p><ul><li>le point <math><mi>𝑀</mi></math> d’abscisse <math><mi>𝑥</mi></math> sur la droite réelle, et le segment qui le relie à <math><mi>𝐼</mi></math> ;</li><li>l’image de <math><mi>𝑥</mi></math> sur le cercle, et l’arc qui la relie à <math><mi>𝐼</mi></math> ;</li><li>une spirale en pointillés, de <math><mi>𝑀</mi></math> vers son image, qui montre l’enroulement.</li></ul><p>Le nom est écrit à droite de la droite réelle, à côté de <math><mi>𝑀</mi></math>.</p><pre><code>tc-wind(
+  x,                 // int | float
+  nom,               // facultatif : content | none
+  color: color,
+  segment: bool,
+  arc: bool,
+  mark: str | none,
+  mark-size: auto | int | float,
+)</code></pre><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">1.5</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  real-line-label: [axe réel],
+  <span style="color: #4b69c6">tc-wind</span>(<span style="color: #b60157">2</span>, <span style="color: #198810">$</span>M(2)<span style="color: #198810">$</span>),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page8-example0-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page8-example0-dark.svg"><img alt="page8-example0" src="/ctz-trigo/page8-example0-light.svg"></picture></p><div class="parametre"><span class="nom"><code>color</code></span><span class="type">color</span><div>La couleur du segment, de l’arc, de la spirale, du point <math><mi>𝑀</mi></math> et du nom. L’image sur le cercle reste noire.</div><span class="defaut">Défaut : <code>rgb("#228B22")</code></span></div><div class="parametre"><span class="nom"><code>segment</code></span><span class="type">bool</span><div>Avec <code>false</code>, le segment de <math><mi>𝐼</mi></math> à <math><mi>𝑀</mi></math> n’est pas dessiné.</div><span class="defaut">Défaut : <code>true</code></span></div><div class="parametre"><span class="nom"><code>arc</code></span><span class="type">bool</span><div>Avec <code>false</code>, l’arc de <math><mi>𝐼</mi></math> à l’image n’est pas dessiné.<br>L’arc dessiné ne fait jamais plus d’un tour : pour <math><mi>𝑥</mi><mo>=</mo><mn>8</mn></math>, seul le dernier morceau, au-delà d’un tour complet, est tracé.</div><span class="defaut">Défaut : <code>true</code></span></div><div class="parametre"><span class="nom"><code>mark</code></span><span class="type">str</span><span class="type">none</span><div>La forme de la marque des deux points : <math><mi>𝑀</mi></math> sur la droite réelle, et son image sur le cercle. Ce sont les mêmes marques que pour <code>tc-point</code> (voir la <a href="/ctz-trigo/4-points.html">partie IV</a>).</div><span class="defaut">Défaut : <code>"*"</code></span></div><div class="parametre"><span class="nom"><code>mark-size</code></span><span class="type">auto</span><span class="type">int</span><span class="type">float</span><div>La largeur de ces marques, comme pour <code>tc-point</code>.</div><span class="defaut">Défaut : <code>auto</code></span></div><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">1.5</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  show-direction: <span style="color: #d73948">true</span>,
+  real-line-label: [axe réel],
+  <span style="color: #4b69c6">tc-wind</span>(<span style="color: #b60157">9</span> <span style="color: #d73948">*</span> calc.pi <span style="color: #d73948">/</span> <span style="color: #b60157">8</span>, <span style="color: #198810">$</span>M(<span style="color: #1d6c76">(</span>9<span style="color: #8b41b1">pi</span><span style="color: #1d6c76">)</span><span style="color: #1d6c76">/</span>8)<span style="color: #198810">$</span>, mark: <span style="color: #198810">"x"</span>),
+  <span style="color: #4b69c6">tc-wind</span>(<span style="color: #d73948">-</span><span style="color: #b60157">1</span>, <span style="color: #198810">$</span>P(<span style="color: #1d6c76">-</span>1)<span style="color: #198810">$</span>, color: blue, mark: <span style="color: #198810">"o"</span>, arc: <span style="color: #d73948">false</span>),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page8-example1-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page8-example1-dark.svg"><img alt="page8-example1" src="/ctz-trigo/page8-example1-light.svg"></picture></p><h2>Marquer un segment de la droite réelle</h2><p><code>tc-interval(de, à)</code> épaissit le segment de la droite réelle qui va du réel <code>de</code> au réel <code>à</code>. Il ne prend pas de nom.</p><pre><code>tc-interval(
+  de,                // int | float
+  à,                 // int | float
+  color: color,
+  thickness: length,
+)</code></pre><div class="parametre"><span class="nom"><code>color</code></span><span class="type">color</span><div>La couleur du segment.</div><span class="defaut">Défaut : <code>red</code></span></div><div class="parametre"><span class="nom"><code>thickness</code></span><span class="type">length</span><div>L’épaisseur du segment.</div><span class="defaut">Défaut : <code>2pt</code></span></div><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">1.5</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  real-line-label: [axe réel],
+  <span style="color: #4b69c6">tc-interval</span>(<span style="color: #b60157">0</span>, calc.pi <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>),
+  <span style="color: #4b69c6">tc-arc</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">90</span>),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page8-example2-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page8-example2-dark.svg"><img alt="page8-example2" src="/ctz-trigo/page8-example2-light.svg"></picture></p><div class="encadre idee"><div class="titre">Un intervalle et son image</div>Comme ci-dessus, on associe un <code>tc-interval</code> sur la droite réelle à un <code>tc-arc</code> sur le cercle, pour montrer que l’intervalle <math><mrow><mo>[</mo><mrow><mn>0</mn><mo>;</mo><mfrac><mi>𝜋</mi><mn>2</mn></mfrac></mrow><mo>]</mo></mrow></math> s’enroule sur un quart de cercle.</div></main><footer><a href="/ctz-trigo/6-arcs-angles.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiBzdHJva2U9IiIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJtMTUuNDg4IDQuNDMwNmMwLjMxNDUgMC4yNjk1NyAwLjM1MDkgMC43NDMwNCAwLjA4MTMgMS4wNTc1bC01LjU4MTYgNi41MTE5IDUuNTgxNiA2LjUxMTljMC4yNjk2IDAuMzE0NSAwLjIzMzIgMC43ODgtMC4wODEzIDEuMDU3Ni0wLjMxNDUgMC4yNjk1LTAuNzg4IDAuMjMzMS0xLjA1NzUtMC4wODE0bC02LTdjLTAuMjQwNzUtMC4yODA5LTAuMjQwNzUtMC42OTUzIDAtMC45NzYybDYtN2MwLjI2OTUtMC4zMTQ0OSAwLjc0My0wLjM1MDkyIDEuMDU3NS0wLjA4MTM1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a><a href="/ctz-trigo/8-cos-sin.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Im04LjUxMTkgNC40MzA2YzAuMzE0NDktMC4yNjk1NyAwLjc4Nzk3LTAuMjMzMTQgMS4wNTc1IDAuMDgxMzVsNiA3YzAuMjQwNyAwLjI4MDkgMC4yNDA3IDAuNjk1MyAwIDAuOTc2MmwtNiA3Yy0wLjI2OTU3IDAuMzE0NS0wLjc0MzA1IDAuMzUwOS0xLjA1NzUgMC4wODE0LTAuMzE0NDktMC4yNjk2LTAuMzUwOTItMC43NDMxLTAuMDgxMzUtMS4wNTc2bDUuNTgxNi02LjUxMTktNS41ODE2LTYuNTExOWMtMC4yNjk1Ny0wLjMxNDUtMC4yMzMxNC0wLjc4Nzk3IDAuMDgxMzUtMS4wNTc1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a></footer></body></html>

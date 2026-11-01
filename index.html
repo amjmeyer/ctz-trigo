@@ -1,6 +1,90 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ctz-trigo</title><style>:root { --accent-color: #228b22; } </style><link rel="stylesheet" href="/ctz-trigo/resources/style.css"><script defer src="/ctz-trigo/resources/control.js"></script><style>table { border-collapse: collapse; margin: 1em 0; }
-th, td { border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent); padding: .3em .8em; text-align: left; vertical-align: top; }
-.encadre { border-left: 4px solid #16a34a; background: color-mix(in srgb, #16a34a 10%, transparent); padding: .6em 1em; margin: 1em 0; border-radius: 4px; }</style></head><body><div id="outline" class="hidden"><p><a href="/ctz-trigo/index.html">Accueil</a></p><p><a href="/ctz-trigo/1-circle.html">I. Le cercle</a></p><p><a href="/ctz-trigo/2-elements.html">II. Les éléments</a></p><p><a href="/ctz-trigo/3-proflycee.html">III. Depuis ProfLycee</a></p></div><header><p><button id="outline-toggle"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIj4KPHBhdGggZD0ibTIwLjc1IDdjMCAwLjQxNDIxLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1NzktMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTc5IDAuNzUgMC43NXoiLz4KPHBhdGggZD0ibTIwLjc1IDEyYzAgMC40MTQyLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1OC0wLjc1LTAuNzVzMC4zMzU3OS0wLjc1IDAuNzUtMC43NWgxNmMwLjQxNDIgMCAwLjc1IDAuMzM1OCAwLjc1IDAuNzV6Ii8+CjxwYXRoIGQ9Im0yMC43NSAxN2MwIDAuNDE0Mi0wLjMzNTggMC43NS0wLjc1IDAuNzVoLTE2Yy0wLjQxNDIxIDAtMC43NS0wLjMzNTgtMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTggMC43NSAwLjc1eiIvPgo8L2c+Cjwvc3ZnPgo=" width="24" height="24" style="display: block; width: 2em"></button><strong>ctz-trigo</strong></p><p><a href="https://typst.app/universe/package/ctz-trigo">→ Universe</a></p></header><main><h1>ctz-trigo</h1><p><em>Le cercle trigonométrique, d’après ProfLycee, construit avec CeTZ.</em></p><pre><code data-lang="typ"><span style="color: #d73948">#</span><span style="color: #d73948">import</span> <span style="color: #198810">"@preview/ctz-trigo:0.1.0"</span>: <span style="color: #d73948">*</span></code></pre><p>Cette ligne est sous-entendue au début de chaque exemple.</p><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(radius: <span style="color: #b60157">2.5</span>)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page1-example0-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page1-example0-dark.svg"><img alt="page1-example0" src="/ctz-trigo/page1-example0-light.svg"></picture></p><h2>Une fonction, des éléments</h2><p>Tout passe par <code>trig-circle(clés, ..éléments)</code> : les clés règlent le cercle (<a href="/ctz-trigo/1-circle.html">partie I</a>), les éléments <code>tc-point</code>, <code>tc-ray</code>… ajoutent ce qu’on veut dessus (<a href="/ctz-trigo/2-elements.html">partie II</a>).</p><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ctz-trigo</title><style>:root { --accent-color: #228b22; } </style><link rel="stylesheet" href="/ctz-trigo/resources/style.css"><script defer src="/ctz-trigo/resources/control.js"></script><style>.encadre { border-left: 4px solid var(--c); background: color-mix(in srgb, var(--c) 10%, transparent); padding: .6em 1em; margin: 1em 0; border-radius: 4px; }
+.encadre > .titre { font-weight: bold; color: var(--c); display: block; margin-bottom: .3em; }
+.encadre.info { --c: #2563eb; }
+.encadre.astuce { --c: #16a34a; }
+.encadre.attention { --c: #ea580c; }
+.encadre.idee { --c: #9333ea; }
+.parametre { background: color-mix(in srgb, currentColor 6%, transparent); border-radius: 4px; padding: .8em 1em; margin: 1.2em 0 .6em; }
+.parametre > .nom { font-weight: bold; font-size: 1.15em; margin-right: .5em; }
+.parametre .type { font-family: monospace; font-size: .8em; padding: .1em .4em; border-radius: 3px; margin-right: .3em; background: color-mix(in srgb, currentColor 12%, transparent); }
+.parametre .defaut { display: block; font-size: .85em; opacity: .7; margin-top: .4em; }
+picture img { width: auto; max-width: 100%; zoom: 1.5; display: block; margin: 0 auto; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent); padding: .3em .8em; text-align: left; vertical-align: top; }</style><style>/* Alignment */
+mtable.right-align mtd,
+mtable mtd.right-align,
+mtable.left-align mtd.right-align,
+mtable.aligned mtd:nth-child(odd) {
+  justify-items: end;
+  text-align: right;
+}
+mtable.cases mtd,
+mtable.left-align mtd,
+mtable mtd.left-align,
+mtable.aligned mtd:nth-child(even),
+math:is(:not([display])) > mtable.multiline-equation mtd {
+  justify-items: start;
+  text-align: left;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.left-flush {
+  padding-left: 0;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.right-flush {
+  padding-right: 0;
+}
+
+/* Tables */
+mtable {
+  math-style: inherit;
+}
+mtd {
+  math-depth: auto-add;
+  math-style: compact;
+  math-shift: compact;
+}
+
+/* Equations */
+mtable.multiline-equation mtd {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+  padding: 0;
+}
+math > mtable.multiline-equation mtr:not(:last-child) mtd {
+  padding-bottom: 0.5em;
+}
+
+/* Fractions */
+mfrac {
+  padding-inline: 0;
+  margin-inline: 0.1em;
+}
+
+/* Accents */
+mover[accent="true" i] > :first-child {
+  font-feature-settings: "dtls";
+}
+mover.dotted[accent="true" i] > :first-child {
+  font-feature-settings: "dtls" 0;
+}
+
+/* Other rules for scriptlevel, displaystyle and math-shift */
+munder > :nth-child(2),
+munderover > :nth-child(2) {
+  math-shift: compact
+}
+munder[accentunder="true" i] > :not(:first-child),
+mover[accent="true" i] > :not(:first-child) {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+}</style></head><body><div id="outline" class="hidden"><p><a href="/ctz-trigo/index.html">Accueil</a></p><p><a href="/ctz-trigo/1-demarrer.html">I. Démarrer</a></p><p><a href="/ctz-trigo/2-cercle.html">II. Le cercle</a></p><p><a href="/ctz-trigo/3-repere.html">III. Le repère</a></p><p><a href="/ctz-trigo/4-points.html">IV. Les points</a></p><p><a href="/ctz-trigo/5-rayons-vecteurs.html">V. Rayons et vecteurs</a></p><p><a href="/ctz-trigo/6-arcs-angles.html">VI. Arcs et angles</a></p><p><a href="/ctz-trigo/7-enroulement.html">VII. L’enroulement</a></p><p><a href="/ctz-trigo/8-cos-sin.html">VIII. Cosinus et sinus</a></p><p><a href="/ctz-trigo/9-canvas.html">IX. Dans son canvas</a></p><p><a href="/ctz-trigo/annexes.html">Annexes</a></p></div><header><p><button id="outline-toggle"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIj4KPHBhdGggZD0ibTIwLjc1IDdjMCAwLjQxNDIxLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1NzktMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTc5IDAuNzUgMC43NXoiLz4KPHBhdGggZD0ibTIwLjc1IDEyYzAgMC40MTQyLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1OC0wLjc1LTAuNzVzMC4zMzU3OS0wLjc1IDAuNzUtMC43NWgxNmMwLjQxNDIgMCAwLjc1IDAuMzM1OCAwLjc1IDAuNzV6Ii8+CjxwYXRoIGQ9Im0yMC43NSAxN2MwIDAuNDE0Mi0wLjMzNTggMC43NS0wLjc1IDAuNzVoLTE2Yy0wLjQxNDIxIDAtMC43NS0wLjMzNTgtMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTggMC43NSAwLjc1eiIvPgo8L2c+Cjwvc3ZnPgo=" width="24" height="24" style="display: block; width: 2em"></button><strong>ctz-trigo</strong></p><p><a href="https://typst.app/universe/package/ctz-trigo">→ Universe</a></p></header><main><h1>ctz-trigo</h1><p><em>Le cercle trigonométrique, à la manière de ProfLycee.</em></p><p>ctz-trigo sert à dessiner le cercle trigonométrique avec Typst, pour un cours, une fiche d’exercices ou une interro. Le paquet est construit sur <a href="https://typst.app/universe/package/cetz">CeTZ</a>, mais il n’est pas nécessaire de connaître CeTZ pour s’en servir : une seule fonction, <code>trig-circle</code>, dessine le cercle, et on lui ajoute ce qu’on veut dessus. En résumé :</p><ul><li><p><strong>une ligne suffit</strong> pour obtenir le cercle « tout fait » de ProfLycee, avec ses valeurs et ses angles remarquables ;</p></li><li><p>on peut à l’inverse partir d’un <strong>cercle nu</strong>, et n’afficher que ce dont on a besoin (repère, vecteurs <math><mover accent="true"><mi>𝑖</mi><mo stretchy="true">⃗</mo></mover></math> et <math><mover accent="true"><mi>𝑗</mi><mo stretchy="true">⃗</mo></mover></math>, sens direct…) ;</p></li><li><p>on peut placer des <strong>points</strong>, des <strong>rayons</strong>, des <strong>vecteurs</strong>, des <strong>arcs</strong> et des <strong>angles</strong> ;</p></li><li><p>on peut illustrer l’<strong>enroulement de la droite réelle</strong> sur le cercle ;</p></li><li><p>on peut représenter le <strong>cosinus et le sinus</strong> d’un angle, et les solutions des équations <math><mo lspace="0em" rspace="0.16666666666666666em">cos</mo><mi>𝑥</mi><mo>=</mo><mo form="prefix" lspace="0em" rspace="0.16666666666666666em">cos</mo><mi>𝛼</mi></math> et <math><mo lspace="0em" rspace="0.16666666666666666em">sin</mo><mi>𝑥</mi><mo>=</mo><mo form="prefix" lspace="0em" rspace="0.16666666666666666em">sin</mo><mi>𝛼</mi></math>.</p></li></ul><p>Voici le cercle par défaut, obtenu en une ligne :</p><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>()</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page1-example0-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page1-example0-dark.svg"><img alt="page1-example0" src="/ctz-trigo/page1-example0-light.svg"></picture></p><p>Et un cercle nu, sur lequel on a ajouté quelques éléments pour illustrer la définition du radian :</p><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
   radius: <span style="color: #b60157">2</span>,
   remarkable: <span style="color: #d73948">false</span>,
   show-axes: <span style="color: #d73948">false</span>,
@@ -9,4 +93,4 @@ th, td { border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transpare
   <span style="color: #4b69c6">tc-ray</span>(<span style="color: #b60157">1rad</span>, <span style="color: #198810">$</span>B<span style="color: #198810">$</span>),
   <span style="color: #4b69c6">tc-arc</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">1rad</span>),
   <span style="color: #4b69c6">tc-angle</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">1rad</span>, <span style="color: #198810">$</span>1 <span style="color: #198810">"rad"</span><span style="color: #198810">$</span>),
-)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page1-example1-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page1-example1-dark.svg"><img alt="page1-example1" src="/ctz-trigo/page1-example1-light.svg"></picture></p><h2>Trois règles</h2><ul><li><strong>Les angles</strong> : un nombre de degrés (<code>45</code>) ou un angle Typst (<code>45deg</code>, <code>calc.pi / 4 * 1rad</code>). Seuls <code>tc-wind</code> et <code>tc-interval</code> prennent un réel (un point de la droite réelle).</li><li><strong>Les noms</strong> : facultatifs, juste après le ou les angles, sans clé : <code>tc-point(30, $A$)</code>.</li><li><strong>La taille</strong> : au-delà d’un rayon de 1, noms, points et pointes de flèche grandissent avec le cercle (deux fois plus grands au rayon 3). Les épaisseurs de trait ne changent pas.</li></ul><div class="encadre">Les noms des fonctions et des clés sont en anglais (le paquet est publié sur Typst Universe) ; la partie III donne leur équivalent dans ProfLycee.</div></main><footer><span></span><a href="/ctz-trigo/1-circle.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Im04LjUxMTkgNC40MzA2YzAuMzE0NDktMC4yNjk1NyAwLjc4Nzk3LTAuMjMzMTQgMS4wNTc1IDAuMDgxMzVsNiA3YzAuMjQwNyAwLjI4MDkgMC4yNDA3IDAuNjk1MyAwIDAuOTc2MmwtNiA3Yy0wLjI2OTU3IDAuMzE0NS0wLjc0MzA1IDAuMzUwOS0xLjA1NzUgMC4wODE0LTAuMzE0NDktMC4yNjk2LTAuMzUwOTItMC43NDMxLTAuMDgxMzUtMS4wNTc2bDUuNTgxNi02LjUxMTktNS41ODE2LTYuNTExOWMtMC4yNjk1Ny0wLjMxNDUtMC4yMzMxNC0wLjc4Nzk3IDAuMDgxMzUtMS4wNTc1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a></footer></body></html>
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page1-example1-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page1-example1-dark.svg"><img alt="page1-example1" src="/ctz-trigo/page1-example1-light.svg"></picture></p><div class="encadre attention"><div class="titre">Évolutions</div>ctz-trigo s’inspire directement de la commande <code>\CercleTrigo</code> du package LaTeX <a href="https://ctan.org/pkg/proflycee">ProfLycee</a> de <strong>Cédric Pierquet</strong>, à laquelle il ajoute de nombreux éléments.<br>Tant que le paquet est en version <code>0.x</code>, il pourra évoluer <strong>de façon incompatible</strong> entre deux versions.</div><p>Pour commencer, rendez-vous à la partie <a href="/ctz-trigo/1-demarrer.html">I. Démarrer</a>.</p></main><footer><span></span><a href="/ctz-trigo/1-demarrer.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Im04LjUxMTkgNC40MzA2YzAuMzE0NDktMC4yNjk1NyAwLjc4Nzk3LTAuMjMzMTQgMS4wNTc1IDAuMDgxMzVsNiA3YzAuMjQwNyAwLjI4MDkgMC4yNDA3IDAuNjk1MyAwIDAuOTc2MmwtNiA3Yy0wLjI2OTU3IDAuMzE0NS0wLjc0MzA1IDAuMzUwOS0xLjA1NzUgMC4wODE0LTAuMzE0NDktMC4yNjk2LTAuMzUwOTItMC43NDMxLTAuMDgxMzUtMS4wNTc2bDUuNTgxNi02LjUxMTktNS41ODE2LTYuNTExOWMtMC4yNjk1Ny0wLjMxNDUtMC4yMzMxNC0wLjc4Nzk3IDAuMDgxMzUtMS4wNTc1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a></footer></body></html>

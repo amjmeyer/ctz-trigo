@@ -1,0 +1,146 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Rayons et vecteurs</title><style>:root { --accent-color: #228b22; } </style><link rel="stylesheet" href="/ctz-trigo/resources/style.css"><script defer src="/ctz-trigo/resources/control.js"></script><style>.encadre { border-left: 4px solid var(--c); background: color-mix(in srgb, var(--c) 10%, transparent); padding: .6em 1em; margin: 1em 0; border-radius: 4px; }
+.encadre > .titre { font-weight: bold; color: var(--c); display: block; margin-bottom: .3em; }
+.encadre.info { --c: #2563eb; }
+.encadre.astuce { --c: #16a34a; }
+.encadre.attention { --c: #ea580c; }
+.encadre.idee { --c: #9333ea; }
+.parametre { background: color-mix(in srgb, currentColor 6%, transparent); border-radius: 4px; padding: .8em 1em; margin: 1.2em 0 .6em; }
+.parametre > .nom { font-weight: bold; font-size: 1.15em; margin-right: .5em; }
+.parametre .type { font-family: monospace; font-size: .8em; padding: .1em .4em; border-radius: 3px; margin-right: .3em; background: color-mix(in srgb, currentColor 12%, transparent); }
+.parametre .defaut { display: block; font-size: .85em; opacity: .7; margin-top: .4em; }
+picture img { width: auto; max-width: 100%; zoom: 1.5; display: block; margin: 0 auto; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent); padding: .3em .8em; text-align: left; vertical-align: top; }</style><style>/* Alignment */
+mtable.right-align mtd,
+mtable mtd.right-align,
+mtable.left-align mtd.right-align,
+mtable.aligned mtd:nth-child(odd) {
+  justify-items: end;
+  text-align: right;
+}
+mtable.cases mtd,
+mtable.left-align mtd,
+mtable mtd.left-align,
+mtable.aligned mtd:nth-child(even),
+math:is(:not([display])) > mtable.multiline-equation mtd {
+  justify-items: start;
+  text-align: left;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.left-flush {
+  padding-left: 0;
+}
+mtable.cases mtd,
+mtable.aligned mtd,
+mtable mtd.flushed,
+mtable mtd.right-flush {
+  padding-right: 0;
+}
+
+/* Tables */
+mtable {
+  math-style: inherit;
+}
+mtd {
+  math-depth: auto-add;
+  math-style: compact;
+  math-shift: compact;
+}
+
+/* Equations */
+mtable.multiline-equation mtd {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+  padding: 0;
+}
+math > mtable.multiline-equation mtr:not(:last-child) mtd {
+  padding-bottom: 0.5em;
+}
+
+/* Fractions */
+mfrac {
+  padding-inline: 0;
+  margin-inline: 0.1em;
+}
+
+/* Accents */
+mover[accent="true" i] > :first-child {
+  font-feature-settings: "dtls";
+}
+mover.dotted[accent="true" i] > :first-child {
+  font-feature-settings: "dtls" 0;
+}
+
+/* Other rules for scriptlevel, displaystyle and math-shift */
+munder > :nth-child(2),
+munderover > :nth-child(2) {
+  math-shift: compact
+}
+munder[accentunder="true" i] > :not(:first-child),
+mover[accent="true" i] > :not(:first-child) {
+  math-depth: inherit;
+  math-style: inherit;
+  math-shift: inherit;
+}</style></head><body><div id="outline" class="hidden"><p><a href="/ctz-trigo/index.html">Accueil</a></p><p><a href="/ctz-trigo/1-demarrer.html">I. Démarrer</a></p><p><a href="/ctz-trigo/2-cercle.html">II. Le cercle</a></p><p><a href="/ctz-trigo/3-repere.html">III. Le repère</a></p><p><a href="/ctz-trigo/4-points.html">IV. Les points</a></p><p><a href="/ctz-trigo/5-rayons-vecteurs.html">V. Rayons et vecteurs</a></p><p><a href="/ctz-trigo/6-arcs-angles.html">VI. Arcs et angles</a></p><p><a href="/ctz-trigo/7-enroulement.html">VII. L’enroulement</a></p><p><a href="/ctz-trigo/8-cos-sin.html">VIII. Cosinus et sinus</a></p><p><a href="/ctz-trigo/9-canvas.html">IX. Dans son canvas</a></p><p><a href="/ctz-trigo/annexes.html">Annexes</a></p></div><header><p><button id="outline-toggle"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIj4KPHBhdGggZD0ibTIwLjc1IDdjMCAwLjQxNDIxLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1NzktMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTc5IDAuNzUgMC43NXoiLz4KPHBhdGggZD0ibTIwLjc1IDEyYzAgMC40MTQyLTAuMzM1OCAwLjc1LTAuNzUgMC43NWgtMTZjLTAuNDE0MjEgMC0wLjc1LTAuMzM1OC0wLjc1LTAuNzVzMC4zMzU3OS0wLjc1IDAuNzUtMC43NWgxNmMwLjQxNDIgMCAwLjc1IDAuMzM1OCAwLjc1IDAuNzV6Ii8+CjxwYXRoIGQ9Im0yMC43NSAxN2MwIDAuNDE0Mi0wLjMzNTggMC43NS0wLjc1IDAuNzVoLTE2Yy0wLjQxNDIxIDAtMC43NS0wLjMzNTgtMC43NS0wLjc1czAuMzM1NzktMC43NSAwLjc1LTAuNzVoMTZjMC40MTQyIDAgMC43NSAwLjMzNTggMC43NSAwLjc1eiIvPgo8L2c+Cjwvc3ZnPgo=" width="24" height="24" style="display: block; width: 2em"></button><strong>ctz-trigo</strong></p><p><a href="https://typst.app/universe/package/ctz-trigo">→ Universe</a></p></header><main><h1>V. Rayons et vecteurs</h1><p>Deux éléments tracent des segments : <code>tc-ray</code> part toujours du centre O, alors que <code>tc-vector</code> se place n’importe où.</p><h2>Les rayons</h2><p><code>tc-ray(angle, nom)</code> trace le rayon qui va du centre O au point du cercle d’angle donné. Le nom est écrit au bout du rayon, à l’extérieur du cercle.</p><pre><code>tc-ray(
+  angle,             // int | float | angle
+  nom,               // facultatif : content | none
+  color: color,
+  thickness: auto | length,
+  arrow: bool,
+  label: content | none,
+  copy: (x, y) | none,
+  copy-name: content | none,
+)</code></pre><div class="parametre"><span class="nom"><code>color</code></span><span class="type">color</span><div>La couleur du rayon et de ses noms.</div><span class="defaut">Défaut : <code>black</code></span></div><div class="parametre"><span class="nom"><code>thickness</code></span><span class="type">auto</span><span class="type">length</span><div>L’épaisseur du rayon. Avec <code>auto</code>, c’est celle du cercle (réglage <code>thickness</code> de <code>trig-circle</code>, 1pt par défaut).</div><span class="defaut">Défaut : <code>auto</code></span></div><div class="parametre"><span class="nom"><code>arrow</code></span><span class="type">bool</span><div>Avec <code>true</code>, le rayon se termine par une flèche : c’est un vecteur.</div><span class="defaut">Défaut : <code>false</code></span></div><div class="parametre"><span class="nom"><code>label</code></span><span class="type">content</span><span class="type">none</span><div>Un texte écrit au milieu du rayon, du côté des aiguilles d’une montre (sous un rayon horizontal). Pratique pour indiquer une longueur.</div><span class="defaut">Défaut : <code>none</code></span></div><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">2</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  <span style="color: #4b69c6">tc-ray</span>(<span style="color: #b60157">0</span>, <span style="color: #198810">$</span>I<span style="color: #198810">$</span>, label: <span style="color: #198810">$</span>1<span style="color: #198810">$</span>),
+  <span style="color: #4b69c6">tc-ray</span>(<span style="color: #b60157">70</span>, <span style="color: #198810">$</span>M<span style="color: #198810">$</span>, color: blue, thickness: <span style="color: #b60157">2pt</span>),
+  <span style="color: #4b69c6">tc-ray</span>(<span style="color: #b60157">160</span>, <span style="color: #198810">$</span><span style="color: #4b69c6">arrow</span>(u)<span style="color: #198810">$</span>, color: red, arrow: <span style="color: #d73948">true</span>),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page6-example0-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page6-example0-dark.svg"><img alt="page6-example0" src="/ctz-trigo/page6-example0-light.svg"></picture></p><div class="parametre"><span class="nom"><code>copy</code></span><span class="type">(x, y)</span><span class="type">none</span><div>Dessine en plus un autre représentant du même vecteur, d’origine le point <math><mrow><mo>(</mo><mrow><mi>𝑥</mi><mo>;</mo><mi>𝑦</mi></mrow><mo>)</mo></mrow></math>. Les coordonnées sont données <strong>en rayons</strong> : <code>(0, -1)</code> est le point le plus bas du cercle, quel que soit le rayon.</div><span class="defaut">Défaut : <code>none</code></span></div><div class="parametre"><span class="nom"><code>copy-name</code></span><span class="type">content</span><span class="type">none</span><div>Le nom de ce représentant, écrit à sa gauche (dans le sens de la flèche).</div><span class="defaut">Défaut : <code>none</code></span></div><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">2</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  <span style="color: #4b69c6">tc-ray</span>(
+    <span style="color: #b60157">60</span>,
+    <span style="color: #198810">$</span>M<span style="color: #198810">$</span>,
+    arrow: <span style="color: #d73948">true</span>,
+    color: blue,
+    copy: (<span style="color: #b60157">0.2</span>, <span style="color: #d73948">-</span><span style="color: #b60157">0.9</span>),
+    copy-name: <span style="color: #198810">$</span><span style="color: #4b69c6">arrow</span>(u)<span style="color: #198810">$</span>,
+  ),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page6-example1-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page6-example1-dark.svg"><img alt="page6-example1" src="/ctz-trigo/page6-example1-light.svg"></picture></p><div class="encadre idee"><div class="titre">Repérer un angle orienté de vecteurs</div>En combinant rayons, vecteurs et angles au centre (<a href="/ctz-trigo/6-arcs-angles.html">partie VI</a>), on illustre l’angle orienté <math><mrow><mo>(</mo><mrow><mover accent="true"><mi>𝑢</mi><mo stretchy="true">⃗</mo></mover><mo>,</mo><mover accent="true"><mi>𝑣</mi><mo stretchy="true">⃗</mo></mover></mrow><mo>)</mo></mrow></math> :</div><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">2</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  show-direction: <span style="color: #d73948">true</span>,
+  <span style="color: #4b69c6">tc-arc</span>(<span style="color: #b60157">20</span>, <span style="color: #b60157">140</span>),
+  <span style="color: #4b69c6">tc-ray</span>(
+    <span style="color: #b60157">20</span>, <span style="color: #198810">$</span>U<span style="color: #198810">$</span>, 
+    color: green, 
+    arrow: <span style="color: #d73948">true</span>,
+    copy: (<span style="color: #b60157">0.5</span>,<span style="color: #d73948">-</span><span style="color: #b60157">0.5</span>), 
+    copy-name: <span style="color: #198810">$</span><span style="color: #4b69c6">arrow</span>(u)<span style="color: #198810">$</span>,
+  ),
+  <span style="color: #4b69c6">tc-ray</span>(
+    <span style="color: #b60157">140</span>, <span style="color: #198810">$</span>V<span style="color: #198810">$</span>, 
+    color: orange, 
+    arrow: <span style="color: #d73948">true</span>,
+    copy: (<span style="color: #d73948">-</span><span style="color: #b60157">0.5</span>,<span style="color: #d73948">-</span><span style="color: #b60157">0.8</span>), 
+    copy-name: <span style="color: #198810">$</span><span style="color: #4b69c6">arrow</span>(v)<span style="color: #198810">$</span>,
+  ),
+  <span style="color: #4b69c6">tc-angle</span>(<span style="color: #b60157">140</span>, <span style="color: #b60157">20</span>, <span style="color: #198810">$</span>(<span style="color: #4b69c6">arrow</span>(v), <span style="color: #4b69c6">arrow</span>(u))<span style="color: #198810">$</span>),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page6-example2-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page6-example2-dark.svg"><img alt="page6-example2" src="/ctz-trigo/page6-example2-light.svg"></picture></p><h2>Les vecteurs</h2><p><code>tc-vector(angle, nom)</code> trace un vecteur dont la direction est donnée par l’angle, et qu’on place où l’on veut avec <code>from</code>. Le nom est écrit au milieu du vecteur, à sa gauche (dans le sens de la flèche).</p><pre><code>tc-vector(
+  angle,             // int | float | angle
+  nom,               // facultatif : content | none
+  from: (x, y) | int | float | angle,
+  length: int | float,
+  color: color,
+  thickness: auto | length,
+)</code></pre><div class="parametre"><span class="nom"><code>from</code></span><span class="type">(x, y)</span><span class="type">int</span><span class="type">float</span><span class="type">angle</span><div><p>L’origine du vecteur. Elle peut s’écrire :</p><ul><li>comme un point <code>(x, y)</code>, en rayons : <code>(0, 0)</code> est le centre O, <code>(0.5, 0)</code> le milieu de <math><mrow><mo>[</mo><mrow><mi>𝑂</mi><mi>𝐼</mi></mrow><mo>]</mo></mrow></math> ;</li><li>comme un angle : l’origine est alors le point du cercle d’angle donné.</li></ul></div><span class="defaut">Défaut : <code>(0, 0)</code></span></div><div class="parametre"><span class="nom"><code>length</code></span><span class="type">int</span><span class="type">float</span><div>La longueur du vecteur, en rayons : avec <code>1</code> (par défaut), le vecteur est unitaire, de la même longueur que le rayon du cercle.</div><span class="defaut">Défaut : <code>1</code></span></div><div class="parametre"><span class="nom"><code>color</code></span><span class="type">color</span><div>La couleur du vecteur et de son nom.</div><span class="defaut">Défaut : <code>black</code></span></div><div class="parametre"><span class="nom"><code>thickness</code></span><span class="type">auto</span><span class="type">length</span><div>L’épaisseur du vecteur. Avec <code>auto</code>, c’est celle du cercle.</div><span class="defaut">Défaut : <code>auto</code></span></div><pre><code data-lang="typ"><span style="color: #4b69c6">#</span><span style="color: #4b69c6">trig-circle</span>(
+  radius: <span style="color: #b60157">2</span>,
+  remarkable: <span style="color: #d73948">false</span>,
+  <span style="color: #4b69c6">tc-point</span>(<span style="color: #b60157">90</span>, <span style="color: #198810">$</span>A<span style="color: #198810">$</span>),
+  <span style="color: #4b69c6">tc-vector</span>(<span style="color: #b60157">0</span>, <span style="color: #198810">$</span><span style="color: #4b69c6">arrow</span>(u)<span style="color: #198810">$</span>, from: <span style="color: #b60157">90</span>, color: blue),
+  <span style="color: #4b69c6">tc-vector</span>(<span style="color: #d73948">-</span><span style="color: #b60157">90</span>, <span style="color: #198810">$</span><span style="color: #4b69c6">arrow</span>(v)<span style="color: #198810">$</span>, from: (<span style="color: #d73948">-</span><span style="color: #b60157">0.8</span>, <span style="color: #b60157">0.4</span>), length: <span style="color: #b60157">0.5</span>, color: red),
+)</code></pre><p><picture><source media="(prefers-color-scheme: light)" srcset="/ctz-trigo/page6-example3-light.svg"><source media="(prefers-color-scheme: dark)" srcset="/ctz-trigo/page6-example3-dark.svg"><img alt="page6-example3" src="/ctz-trigo/page6-example3-light.svg"></picture></p></main><footer><a href="/ctz-trigo/4-points.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiBzdHJva2U9IiIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJtMTUuNDg4IDQuNDMwNmMwLjMxNDUgMC4yNjk1NyAwLjM1MDkgMC43NDMwNCAwLjA4MTMgMS4wNTc1bC01LjU4MTYgNi41MTE5IDUuNTgxNiA2LjUxMTljMC4yNjk2IDAuMzE0NSAwLjIzMzIgMC43ODgtMC4wODEzIDEuMDU3Ni0wLjMxNDUgMC4yNjk1LTAuNzg4IDAuMjMzMS0xLjA1NzUtMC4wODE0bC02LTdjLTAuMjQwNzUtMC4yODA5LTAuMjQwNzUtMC42OTUzIDAtMC45NzYybDYtN2MwLjI2OTUtMC4zMTQ0OSAwLjc0My0wLjM1MDkyIDEuMDU3NS0wLjA4MTM1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a><a href="/ctz-trigo/6-arcs-angles.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Im04LjUxMTkgNC40MzA2YzAuMzE0NDktMC4yNjk1NyAwLjc4Nzk3LTAuMjMzMTQgMS4wNTc1IDAuMDgxMzVsNiA3YzAuMjQwNyAwLjI4MDkgMC4yNDA3IDAuNjk1MyAwIDAuOTc2MmwtNiA3Yy0wLjI2OTU3IDAuMzE0NS0wLjc0MzA1IDAuMzUwOS0xLjA1NzUgMC4wODE0LTAuMzE0NDktMC4yNjk2LTAuMzUwOTItMC43NDMxLTAuMDgxMzUtMS4wNTc2bDUuNTgxNi02LjUxMTktNS41ODE2LTYuNTExOWMtMC4yNjk1Ny0wLjMxNDUtMC4yMzMxNC0wLjc4Nzk3IDAuMDgxMzUtMS4wNTc1eiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==" width="24" height="24" style="display: block; width: 2em"></a></footer></body></html>
