@@ -4,27 +4,41 @@
 
 #title()
 
-_Le cercle trigonométrique, d'après ProfLycee, construit avec CeTZ._
+_Le cercle trigonométrique, à la manière de ProfLycee._
 
-```typ
-#import "@preview/ctz-trigo:0.1.0": *
-```
+ctz-trigo sert à dessiner le cercle trigonométrique avec Typst, pour un
+cours, une fiche d'exercices ou une interro. Le paquet est construit sur
+#link("https://typst.app/universe/package/cetz")[CeTZ], mais il n'est pas
+nécessaire de connaître CeTZ pour s'en servir : une seule fonction,
+`trig-circle`, dessine le cercle, et on lui ajoute ce qu'on veut dessus. En
+résumé :
 
-Cette ligne est sous-entendue au début de chaque exemple.
+- *une ligne suffit* pour obtenir le cercle « tout fait » de ProfLycee, avec
+  ses valeurs et ses angles remarquables ;
 
-#example(columns: 2, ```typ
+- on peut à l'inverse partir d'un *cercle nu*, et n'afficher que ce dont on a
+  besoin (repère, vecteurs $arrow(i)$ et $arrow(j)$, sens direct…) ;
+
+- on peut placer des *points*, des *rayons*, des *vecteurs*, des *arcs* et
+  des *angles* ;
+
+- on peut illustrer l'*enroulement de la droite réelle* sur le cercle ;
+
+- on peut représenter le *cosinus et le sinus* d'un angle, et les solutions
+  des équations $cos x = cos alpha$ et $sin x = sin alpha$.
+
+Voici le cercle par défaut, obtenu en une ligne :
+
+#example(```typ
 // SETUP
 // START
-#trig-circle(radius: 2.5)
+#trig-circle()
 ```)
 
-= Une fonction, des éléments
+Et un cercle nu, sur lequel on a ajouté quelques éléments pour illustrer la
+définition du radian :
 
-Tout passe par `trig-circle(clés, ..éléments)` : les clés règlent le cercle
-(#i-link("1-circle.typ")[partie I]), les éléments `tc-point`, `tc-ray`…
-ajoutent ce qu'on veut dessus (#i-link("2-elements.typ")[partie II]).
-
-#example(columns: 2, ```typ
+#example(```typ
 // SETUP
 // START
 #trig-circle(
@@ -39,17 +53,12 @@ ajoutent ce qu'on veut dessus (#i-link("2-elements.typ")[partie II]).
 )
 ```)
 
-= Trois règles
+#warning(title: "Évolutions")[
+  ctz-trigo s'inspire directement de la commande `\CercleTrigo` du package
+  LaTeX #link("https://ctan.org/pkg/proflycee")[ProfLycee] de *Cédric
+  Pierquet*, à laquelle il ajoute de nombreux éléments. \
+  Tant que le paquet est en version `0.x`, il pourra évoluer *de façon
+  incompatible* entre deux versions.
+]
 
-- *Les angles* : un nombre de degrés (`45`) ou un angle Typst (`45deg`,
-  `calc.pi / 4 * 1rad`). Seuls `tc-wind` et `tc-interval` prennent un réel
-  (un point de la droite réelle).
-- *Les noms* : facultatifs, juste après le ou les angles, sans clé :
-  `tc-point(30, $A$)`.
-- *La taille* : au-delà d'un rayon de 1, noms, points et pointes de flèche
-  grandissent avec le cercle (deux fois plus grands au rayon 3). Les
-  épaisseurs de trait ne changent pas.
-
-#tip[Les noms des fonctions et des clés sont en anglais (le paquet est
-publié sur Typst Universe) ; la partie III donne leur équivalent dans
-ProfLycee.]
+Pour commencer, rendez-vous à la partie #i-link("1-demarrer.typ")[I. Démarrer].
